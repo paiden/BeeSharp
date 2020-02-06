@@ -1,0 +1,221 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".g.cs" #>
+
+#nullable enable
+
+using System;
+
+namespace BeeSharp.Types
+{
+<#
+    for(int i = 2; i <= 8; i++)
+    {
+        GenerateOptOfClass(i);
+    }
+#>
+}
+
+<#
+void GenerateOptOfClass(int numTypeArgs)
+{
+#>
+    public sealed class Union<#=TypeArgs(numTypeArgs)#> : IEquatable<Union<#=TypeArgs(numTypeArgs)#>>
+    {
+<#Generate(numTypeArgs, Field);#>
+
+<#Generate(numTypeArgs, Constructor);#>
+
+<#Generate(numTypeArgs, ImplicitOperator);#>
+
+<#Map(numTypeArgs);#>
+
+<#Do(numTypeArgs);#>
+
+<#Equals(numTypeArgs);#>
+
+        public override bool Equals(object? other) => this.Equals(other as Union<#=TypeArgs(numTypeArgs)#>);
+
+<#GetHashCode(numTypeArgs);#>
+    }
+
+<#
+}
+#>
+
+<#
+void Constructor(int numTypeArgs, int cur)
+{
+#>
+        public Union(T<#=cur#> of) => this.ofT<#=cur#> = Opt.Some(of);
+<#
+}
+#>
+
+<#
+void ImplicitOperator(int numTypeArgs, int cur)
+{
+#>
+        public static implicit operator Union<#=TypeArgs(numTypeArgs)#>(T<#=cur#> of) => new Union<#=TypeArgs(numTypeArgs)#>(of);
+<#
+}
+#>
+
+<#
+void Field(int numTypeArgs, int cur)
+{
+#>
+        private readonly Opt<T<#=cur#>> <#=FieldName(cur)#>;
+<#
+}
+#>
+
+<#
+void Map(int numTypeArgs)
+{
+    int nmo = numTypeArgs - 1;
+#>
+        public T Map<T>(<#=MatchArgs(numTypeArgs)#>) =>
+            this.<#=FieldName(0)#>.MapOrElse(m0,
+<#
+            for(int i = 1; i < numTypeArgs - 1; i++)
+            {
+#>
+            () => this.<#=FieldName(i)#>.MapOrElse(m<#=i#>,
+<#
+            }
+#>
+            () => this.<#=FieldName(nmo)#>.Map(m<#=nmo#>).Unwrap()<#=Repeat(")", nmo)#>;
+<#
+}
+#>
+
+<#
+void Do(int numTypeArgs)
+{
+    int nmo = numTypeArgs - 1;
+#>
+        public void Do(<#=ApplyArgs(numTypeArgs)#>) =>
+            this.<#=FieldName(0)#>.DoOrElse(d0,
+<#
+            for(int i = 1; i < numTypeArgs - 1; i++)
+            {
+#>
+            () => this.<#=FieldName(i)#>.DoOrElse(d<#=i#>,
+<#
+            }
+#>
+            () => this.<#=FieldName(nmo)#>.Do(d<#=nmo#>)<#=Repeat(")", nmo)#>;
+<#
+}
+#>
+
+<#
+void Equals(int numTypeArgs)
+{
+    int nmo = numTypeArgs - 1;
+#>
+        public bool Equals(Union<#=TypeArgs(numTypeArgs)#>? other)
+        {
+            if(ReferenceEquals(other, null)) { return false; }
+            if(ReferenceEquals(this, other)) { return true; }
+
+            return this.<#=FieldName(0)#>.Equals(other.<#=FieldName(0)#>)
+<#
+            for(int i = 1; i < numTypeArgs - 1; i++)
+            {
+#>
+                && this.<#=FieldName(i)#>.Equals(other.<#=FieldName(i)#>)
+<#
+            }
+#>
+                && this.<#=FieldName(nmo)#>.Equals(other.<#=FieldName(nmo)#>);
+        }
+<#
+}
+#>
+
+<#
+void GetHashCode(int numTypeArgs)
+{
+    int nmo = numTypeArgs - 1;
+#>
+        public override int GetHashCode()
+            => HashCode.Combine(<#=FieldArgList(numTypeArgs)#>);
+<#
+}
+#>
+
+<#+
+
+string FieldName(int i) => $"ofT{i}";
+
+string Repeat(string input, int num)
+    => string.Join(string.Empty, Enumerable.Repeat(input, num));
+
+string FieldArgList(int numTypeArgs)
+{
+    var sb = new StringBuilder();
+
+    for(int i = 0; i < numTypeArgs; i++)
+    {
+        sb.Append($"this.{FieldName(i)}, ");
+    }
+
+    return sb.Remove(sb.Length - 2, 2).ToString();
+}
+
+string MatchArgs(int numTypeArgs)
+{
+    var sb = new StringBuilder();
+
+    for(int i = 0; i < numTypeArgs; i++)
+    {
+        sb.Append($"Func<T{i}, T> m{i}, ");
+    }
+
+    return sb.Remove(sb.Length - 2, 2).ToString();
+}
+
+string ApplyArgs(int numTypeArgs)
+{
+    var sb = new StringBuilder();
+
+    for(int i = 0; i < numTypeArgs; i++)
+    {
+        sb.Append($"Action<T{i}> d{i}, ");
+    }
+
+    return sb.Remove(sb.Length - 2, 2).ToString();
+}
+
+void ArgList(int numTypeArgs)
+{
+}
+
+void Generate(int numTypeArgs, Action<int, int> genSingleItem)
+{
+    for(int i = 0; i < numTypeArgs; i++)
+    {
+        genSingleItem(numTypeArgs, i);
+    }
+}
+
+string TypeArgs(int numTypeArgs)
+{
+    var sb = new StringBuilder("<");
+
+    for(int i = 0; i < numTypeArgs; i++)
+    {
+        sb.Append($"T{i}, ");
+    }
+
+    sb.Remove(sb.Length - 2, 2);
+    sb.Append(">");
+
+    return sb.ToString();
+}
+#>

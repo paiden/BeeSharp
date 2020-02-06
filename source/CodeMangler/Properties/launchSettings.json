@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CodeMangler": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"D:\\psp\\BeeSharp\\source\\BeeSharp\" -o \"D:\\psp\\BeeSharp\\artifacts\\BeeSharp.g.cs\""
+    }
+  }
+}
