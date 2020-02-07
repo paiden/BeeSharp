@@ -95,5 +95,41 @@ namespace BeeSharp.Analyzer {
                 return ResourceManager.GetString("BS3002Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expression &apos;{0}&apos; default constructs object of type &apos;{1}&apos; which is marked as a non default constructable type. Please use a parameterized constructor instead..
+        /// </summary>
+        internal static string BS3003Message2A {
+            get {
+                return ResourceManager.GetString("BS3003Message2A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default constructor usage not allowed.
+        /// </summary>
+        internal static string BS3003Title {
+            get {
+                return ResourceManager.GetString("BS3003Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expression &apos;{0}&apos; may return a default constructed object of type  &apos;{1}&apos; which is marked as a non default constructable type. Please use a method variant that does not return default constructed instances. E.g. use &apos;Single()&apos; instead of &apos;SingleOrDefault()&apos;..
+        /// </summary>
+        internal static string BS3004Message2A {
+            get {
+                return ResourceManager.GetString("BS3004Message2A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default constructed type may be returned.
+        /// </summary>
+        internal static string BS3004Title {
+            get {
+                return ResourceManager.GetString("BS3004Title", resourceCulture);
+            }
+        }
     }
 }

@@ -60,6 +60,32 @@ using var ia = lockedInt.ReadAccess();
                 .WithLoc(new DiagnosticResultLocation("Test0.cs", 14, 28)));
         }
 
+        [Fact]
+        public void GivenConstructedLocalDisposable_WhenNotInUsing_RiasesDiag3001()
+        {
+            // Arrange
+            var test = @"
+using BeeSharp;
+
+namespace Test 
+{
+    public class LocalDisp : IDisposeLocally { public void Dispose() {} }
+
+    public class TestClass
+    {
+        public void TestMethod() 
+        {
+            var t = new LocalDisp();
+        }
+    }
+}";
+
+            // assert
+            // Assert
+            VerifyCSharpDiagnostic(test, DiagnosticResult.Create(DisposeLocallyAnalyzer.BS3001, "new LocalDisp()")
+                .WithLoc(new DiagnosticResultLocation("Test0.cs", 12, 21)));
+        }
+
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new BeeSharpAnalyzerCodeFixProvider();

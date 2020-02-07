@@ -9,5 +9,8 @@ namespace CodeMangler
 
         [Option('o', "out", Required = true, HelpText = "Output file name")]
         public string OutputFile { get; set; }
+
+        [Option('t', "template", Required = false, HelpText = "Also create the PP template", Default = true)]
+        public bool Template { get; set; } = true;
     }
 }

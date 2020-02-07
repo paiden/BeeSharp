@@ -1,25 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackageId>BeeSharp.Analyzer</PackageId>
-    <PackageVersion>1.0.0.0</PackageVersion>
-    <Authors>phaiden</Authors>
-    <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
-    <PackageProjectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</PackageProjectUrl>
-    <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
-    <RepositoryUrl>http://REPOSITORY_URL_HERE_OR_DELETE_THIS_LINE</RepositoryUrl>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>BeeSharp.Analyzer</Description>
-    <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
-    <Copyright>Copyright</Copyright>
-    <PackageTags>BeeSharp.Analyzer, analyzers</PackageTags>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

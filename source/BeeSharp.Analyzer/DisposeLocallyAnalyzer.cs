@@ -31,14 +31,26 @@ namespace BeeSharp.Analyzer
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(AnalyzeInvocation, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(AnalyzeObjectCreation, SyntaxKind.ObjectCreationExpression);
         }
 
-        private static void Analyze(SyntaxNodeAnalysisContext context)
+        private static void AnalyzeInvocation(SyntaxNodeAnalysisContext context)
         {
             var invocationSyntax = (InvocationExpressionSyntax)context.Node;
-
             var ti = context.SemanticModel.GetTypeInfo(invocationSyntax);
+            AnalyzeNode(ti, invocationSyntax, context);
+        }
+
+        private static void AnalyzeObjectCreation(SyntaxNodeAnalysisContext context)
+        {
+            var creationSyntax = (ObjectCreationExpressionSyntax)context.Node;
+            var ti = context.SemanticModel.GetTypeInfo(creationSyntax);
+            AnalyzeNode(ti, creationSyntax, context);
+        }
+
+        private static void AnalyzeNode(TypeInfo ti, SyntaxNode invocationSyntax, SyntaxNodeAnalysisContext context)
+        {
             if (!ti.Type.Interfaces.Any(i => i.Name == nameof(IDisposeLocallyStrict) || i.Name == nameof(IDisposeLocally)))
             {
                 return;

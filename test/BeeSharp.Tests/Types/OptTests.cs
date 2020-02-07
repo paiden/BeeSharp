@@ -1,6 +1,6 @@
 ﻿using System;
-using FluentAssertions;
 using BeeSharp.Types;
+using FluentAssertions;
 using Xunit;
 
 namespace BeeSharp.Tests.Types

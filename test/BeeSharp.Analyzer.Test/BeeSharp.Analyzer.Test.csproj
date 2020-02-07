@@ -16,8 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\BeeSharp\BeeSharp.csproj" />
-    <ProjectReference Include="..\..\source\BeeSharp.Analyzer\BeeSharp.Analyzer.csproj" />
+    <ProjectReference Include="..\..\source\BeeSharp\BeeSharp.csproj">
+      <Aliases>bs</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\..\source\BeeSharp.Analyzer\BeeSharp.Analyzer.csproj">
+      <Aliases></Aliases>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

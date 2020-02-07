@@ -1,11 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="../../shared.targets"/>
+
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>0.1.0</Version>
+    <Version>$(BeesVersion)</Version>
+
+  </PropertyGroup>
+
+  <!-- Packaging options -->
+  <PropertyGroup>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>contentFiles</ContentTargetFolders>
+    <PackageOutputPath>$(ProjectDir)..\..\artifacts</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +43,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\BeeSharp.Analyzer\bin\$(Configuration)\netstandard2.1\BeeSharp.Analyzer.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\BeeSharp.Analyzer\bin\$(Configuration)\netstandard2.0\BeeSharp.Analyzer.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\..\artifacts\BeeSharp.g.cs.pp" Pack="true" Visible="false" BuildAction="Compile" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="&quot;$(ProjectDir)..\CodeMangler\bin\$(Configuration)\netcoreapp3.1\CodeMangler.exe&quot; -i &quot;$(ProjectDir) &quot; -o &quot;$(ProjectDir)\..\..\artifacts\BeeSharp.g.cs&quot;" />
+  </Target>
 
 </Project>

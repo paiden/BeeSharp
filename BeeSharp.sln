@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29721.120
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp", "source\BeeSharp\BeeSharp.csproj", "{7534AC29-10F4-4C3B-AA31-B652C720E26B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{50541126-8FFC-4413-BD69-60A848E16EA6} = {50541126-8FFC-4413-BD69-60A848E16EA6}
+		{32566234-D3BE-4F01-AED3-90E89260AACB} = {32566234-D3BE-4F01-AED3-90E89260AACB}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp.Tests", "test\BeeSharp.Tests\BeeSharp.Tests.csproj", "{C46089F8-7AD4-42B8-9D58-F2C0D4DBACEF}"
 EndProject
@@ -12,15 +16,20 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".test", ".test", "{B30F6DD8-2050-460A-B98A-744F4D793A8F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp.Compile.Test", "test\BeeSharp.Compile\BeeSharp.Compile.Test.csproj", "{52A52485-C73B-4AA6-B97C-FEB530B2A6BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7534AC29-10F4-4C3B-AA31-B652C720E26B} = {7534AC29-10F4-4C3B-AA31-B652C720E26B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeSharp.Analyzer", "source\BeeSharp.Analyzer\BeeSharp.Analyzer.csproj", "{32566234-D3BE-4F01-AED3-90E89260AACB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp.Analyzer", "source\BeeSharp.Analyzer\BeeSharp.Analyzer.csproj", "{32566234-D3BE-4F01-AED3-90E89260AACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeSharp.Analyzer.Test", "test\BeeSharp.Analyzer.Test\BeeSharp.Analyzer.Test.csproj", "{28CA88DB-B962-433F-9159-250307C69CDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp.Analyzer.Test", "test\BeeSharp.Analyzer.Test\BeeSharp.Analyzer.Test.csproj", "{28CA88DB-B962-433F-9159-250307C69CDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".infra", ".infra", "{4FF8A383-C698-47EC-AB1A-CACF1E55E2C6}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp.Package.Test", "test\BeeSharp.Package.Tests\BeeSharp.Package.Test.csproj", "{82F075D8-3632-4FE7-91C3-19974D52A476}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +61,9 @@ Global
 		{28CA88DB-B962-433F-9159-250307C69CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28CA88DB-B962-433F-9159-250307C69CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28CA88DB-B962-433F-9159-250307C69CDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F075D8-3632-4FE7-91C3-19974D52A476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F075D8-3632-4FE7-91C3-19974D52A476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F075D8-3632-4FE7-91C3-19974D52A476}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +73,7 @@ Global
 		{50541126-8FFC-4413-BD69-60A848E16EA6} = {4FF8A383-C698-47EC-AB1A-CACF1E55E2C6}
 		{52A52485-C73B-4AA6-B97C-FEB530B2A6BF} = {B30F6DD8-2050-460A-B98A-744F4D793A8F}
 		{28CA88DB-B962-433F-9159-250307C69CDF} = {B30F6DD8-2050-460A-B98A-744F4D793A8F}
+		{82F075D8-3632-4FE7-91C3-19974D52A476} = {B30F6DD8-2050-460A-B98A-744F4D793A8F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92D6304B-F9DD-41DF-84B1-4030FE3B36F5}

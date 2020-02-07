@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using BeeSharp.Types;
+using FluentAssertions;
 using Xunit;
 
 [assembly: ExcludeFromCodeCoverage]

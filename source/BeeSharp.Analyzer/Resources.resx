@@ -129,4 +129,16 @@
   <data name="BS3002Title" xml:space="preserve">
     <value>Invcoation has to be inside using statement</value>
   </data>
+  <data name="BS3003Message2A" xml:space="preserve">
+    <value>Expression '{0}' default constructs object of type '{1}' which is marked as a non default constructable type. Please use a parameterized constructor instead.</value>
+  </data>
+  <data name="BS3003Title" xml:space="preserve">
+    <value>Default constructor usage not allowed</value>
+  </data>
+  <data name="BS3004Message2A" xml:space="preserve">
+    <value>Expression '{0}' may return a default constructed object of type  '{1}' which is marked as a non default constructable type. Please use a method variant that does not return default constructed instances. E.g. use 'Single()' instead of 'SingleOrDefault()'.</value>
+  </data>
+  <data name="BS3004Title" xml:space="preserve">
+    <value>Default constructed type may be returned</value>
+  </data>
 </root>

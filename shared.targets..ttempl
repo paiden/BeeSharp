@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <BeesVersion>$BEES_VERSION$</BeesVersion>
+  </PropertyGroup>
+</Project>

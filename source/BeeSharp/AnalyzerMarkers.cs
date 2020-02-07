@@ -18,6 +18,15 @@ namespace BeeSharp
     /// </summary>
     public interface IDisposeLocally : IDisposable
     {
+    }
 
+    /// <summary>
+    /// Types implementing this interface are not allowed to be default constructed.
+    /// </summary>
+    /// <remarks>
+    /// Should only be used on <b>structs</b>. For classes make the constructor private instead.
+    /// </remarks>
+    public interface IPreventDefaultConstruction
+    {
     }
 }

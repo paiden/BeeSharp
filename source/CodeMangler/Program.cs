@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using CommandLine;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -10,6 +11,15 @@ namespace CodeMangler
 {
     public static class Program
     {
+
+        private const string AcceesModPreprocA1 = @"
+#if BEES_INTERNAL
+    internal
+#else
+    public
+#endif
+    {0} ";
+
         private const string OutputText = @"
 #nullable enable
 
@@ -30,11 +40,11 @@ using BeeSharp.Utils;
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(o =>
                 {
-                    var files = Directory.GetFiles(o.InputDir, "*.cs", SearchOption.AllDirectories);
+                    var files = Directory.GetFiles(o.InputDir.Trim(), "*.cs", SearchOption.AllDirectories);
 
                     StringBuilder sb = new StringBuilder(OutputText);
 
-                    foreach (var f in files)
+                    foreach (var f in files.Where(f => !InputFilters.Any(fp => f.Contains(fp, System.StringComparison.OrdinalIgnoreCase))))
                     {
                         var nameSpaces = GetNamespaceNodes(f);
 
@@ -59,7 +69,28 @@ using BeeSharp.Utils;
                         }
                     }
 
+                    var dir = Path.GetDirectoryName(o.OutputFile);
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+
+                    // Add access Modifiers
+                    sb.Replace("public class ", string.Format(AcceesModPreprocA1, "class"));
+                    sb.Replace("public struct ", string.Format(AcceesModPreprocA1, "struct"));
+                    sb.Replace("public sealed class ", string.Format(AcceesModPreprocA1, "sealed class"));
+                    sb.Replace("public static class ", string.Format(AcceesModPreprocA1, "static class"));
+                    sb.Replace("public interface ", string.Format(AcceesModPreprocA1, "interface"));
+                    sb.Replace("public enum ", string.Format(AcceesModPreprocA1, "enum"));
+
                     File.WriteAllText(o.OutputFile, sb.ToString(), Encoding.UTF8);
+
+                    if (o.Template)
+                    {
+                        sb.Replace("namespace BeeSharp", "namespace $rootnamespace$")
+                            .Replace("using BeeSharp", "using $rootnamespace$");
+                        File.WriteAllText($"{o.OutputFile}.pp", sb.ToString(), Encoding.UTF8);
+                    }
                 });
         }
 
@@ -87,6 +118,12 @@ using BeeSharp.Utils;
             "AssemblyInfo.cs",
             "BeeSharpConstants.cs",
             "Error.cs",
+        };
+
+        private static List<string> InputFilters { get; } = new List<string>()
+        {
+            @"\obj",
+            @"\bin",
         };
     }
 }
