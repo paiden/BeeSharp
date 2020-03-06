@@ -31,6 +31,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using BeeSharp.Utils;
+using BeeSharp.Validation;
 
 ";
 
@@ -122,8 +123,8 @@ using BeeSharp.Utils;
 
         private static List<string> InputFilters { get; } = new List<string>()
         {
-            @"\obj",
-            @"\bin",
+            @"\obj\",
+            @"\bin\",
         };
     }
 }

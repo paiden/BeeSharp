@@ -2,6 +2,8 @@
 {
     internal static class BeeSharpConstants
     {
+        public const string DbgCond = "DEBUG";
+
         public static class Compare
         {
             public const int ThisPreceedes = -1;

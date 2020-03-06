@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../../shared.targets"/>
+  <Import Project="../../shared.targets" />
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
