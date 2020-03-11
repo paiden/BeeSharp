@@ -10,7 +10,7 @@ namespace BeeSharp.Types
 
         public static AbsDirPath UncheckedNew(string s) => new AbsDirPath(s);
 
-        public static Res<AbsDirPath> Of(string s) => Res.Of(() => new AbsDirPath(Check(Fixup(s))));
+        public static Res<AbsDirPath> Of(string s) => Res.Try(() => new AbsDirPath(Check(Fixup(s))));
 
         public int CompareTo(AbsDirPath other) => this.value.CompareTo(other.value);
 

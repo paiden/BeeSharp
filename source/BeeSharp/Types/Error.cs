@@ -66,5 +66,7 @@ namespace BeeSharp.Types
 
         public Error Wrap(Error inner)
             => new Error(this.Type, this.Message, new StackTrace().ToString(), inner);
+
+        public override string ToString() => this.Message;
     }
 }

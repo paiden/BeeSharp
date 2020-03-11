@@ -13,7 +13,7 @@ namespace BeeSharp.Types
 
         public static Res<T> Ok<T>(T res) => Res<T>.Ok(res);
 
-        public static Res<T> Of<T>(Func<T> f)
+        public static Res<T> Try<T>(Func<T> f)
         {
             try
             {
