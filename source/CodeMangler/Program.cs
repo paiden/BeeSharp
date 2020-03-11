@@ -27,9 +27,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
+using BeeSharp.Extensions;
 using BeeSharp.Utils;
 using BeeSharp.Validation;
 
@@ -107,6 +109,13 @@ using BeeSharp.Validation;
         {
             path = path.Replace(".g.cs", ".cs");
             var file = Path.GetFileNameWithoutExtension(path);
+
+            var dotSuffix = file.IndexOf(".");
+            if (dotSuffix > 0)
+            {
+                file = file.Substring(0, dotSuffix);
+            }
+
             return file.ToUpperInvariant();
         }
 

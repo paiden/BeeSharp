@@ -24,21 +24,24 @@ namespace BeeSharp.Types
 
         public string Message { get; }
 
-        public StackTrace Trace { get; }
+        public string StackTrace { get; }
 
-        private Error(ErrorType type, string message, StackTrace trace, Error? inner = null)
+        private Error(ErrorType type, string message, string stackTrace, Error? inner = null)
         {
             this.Type = type;
             this.Message = message;
-            this.Trace = trace;
+            this.StackTrace = stackTrace;
             this.Inner = inner;
         }
 
         public static Error InvalidOp(string message)
-            => new Error(ErrorType.Invalidoperation, message, new StackTrace());
+            => new Error(ErrorType.Invalidoperation, message, new StackTrace().ToString());
 
         public static Error Unspecified(string message)
-            => new Error(ErrorType.Unspecifed, message, new StackTrace());
+            => new Error(ErrorType.Unspecifed, message, new StackTrace().ToString());
+
+        public static Error FromException(Exception exc)
+            => new Error(ErrorType.Unspecifed, exc.Message, exc.StackTrace);
 
         public static implicit operator bool(Error err) => err != null;
 
@@ -62,6 +65,6 @@ namespace BeeSharp.Types
             => obj.GetHashCode();
 
         public Error Wrap(Error inner)
-            => new Error(this.Type, this.Message, new StackTrace(), inner);
+            => new Error(this.Type, this.Message, new StackTrace().ToString(), inner);
     }
 }

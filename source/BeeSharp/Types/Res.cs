@@ -12,6 +12,19 @@ namespace BeeSharp.Types
         public static Res<Unit> Ok() => Res<Unit>.Ok(Unit.U);
 
         public static Res<T> Ok<T>(T res) => Res<T>.Ok(res);
+
+        public static Res<T> Of<T>(Func<T> f)
+        {
+            try
+            {
+                var r = f();
+                return Res<T>.Ok(r);
+            }
+            catch (Exception exc)
+            {
+                return Res<T>.Err(Error.FromException(exc));
+            }
+        }
     }
 
     public sealed class Res<T> : IEquatable<Res<T>>
