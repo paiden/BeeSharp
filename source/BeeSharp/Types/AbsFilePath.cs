@@ -35,5 +35,7 @@ namespace BeeSharp.Types
             => Path.GetFullPath(s.Trim()
                 .Replace(": ", ":") // Get rid of local disk relative paths
                 .Replace(" :", ":")); // Get rid of local disk relative paths
+
+        public override string ToString() => this.value;
     }
 }

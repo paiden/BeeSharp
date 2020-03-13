@@ -1,11 +1,15 @@
-﻿using BeeSharp.Types;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BeeSharp.Types;
 using FluentAssertions;
 using Xunit;
 
 namespace BeeSharp.Tests.Types
 {
-    public class CIStringTests : StructSemTypeTests<CIString>
+    public class CIStringTests : StructSemTypeTests<CIString, string>
     {
+        protected override IEnumerable<string> InvalidInitValues => Enumerable.Empty<string>();
+
         [Fact]
         public void WhenComparing_CasingIsIgnored()
         {
@@ -20,6 +24,7 @@ namespace BeeSharp.Tests.Types
             r.Should().BeTrue();
         }
 
+        protected override CIString Create(string b) => CIString.New("x");
         protected override CIString CreateX() => CIString.New("x");
         protected override CIString CreateY() => CIString.New("y");
         protected override bool InvokeEqualsOp(CIString x, CIString y) => x == y;

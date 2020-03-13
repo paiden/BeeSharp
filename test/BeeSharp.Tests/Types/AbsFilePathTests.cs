@@ -1,12 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using BeeSharp.Types;
 using FluentAssertions;
 using Xunit;
 
 namespace BeeSharp.Tests.Types
 {
-    public sealed class AbsFilePathTests : StructSemTypeTests<AbsFilePath>
+    public sealed class AbsFilePathTests : StructSemTypeTests<AbsFilePath, string>
     {
+        protected override IEnumerable<string> InvalidInitValues
+        {
+            get
+            {
+                yield return @"";
+            }
+        }
+
         protected override AbsFilePath CreateX() => AbsFilePath.New(@"C:\test");
 
         protected override AbsFilePath CreateY() => AbsFilePath.New(@"C:\test.txt");
@@ -74,5 +83,7 @@ namespace BeeSharp.Tests.Types
             // Assert
             e.Should().NotBeNull();
         }
+
+        protected override AbsFilePath Create(string b) => AbsFilePath.New(b);
     }
 }

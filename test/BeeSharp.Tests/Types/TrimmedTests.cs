@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using BeeSharp.Types;
 using FluentAssertions;
 using Xunit;
 
 namespace BeeSharp.Tests.Types
 {
-    public sealed class TrimmedTests : StructSemTypeTests<Trimmed>
+    public sealed class TrimmedTests : StructSemTypeTests<Trimmed, string>
     {
+        protected override IEnumerable<string> InvalidInitValues { get { yield break; } }
+
         protected override Trimmed CreateX() => Trimmed.New("x");
 
         protected override Trimmed CreateY() => Trimmed.New("y");
@@ -35,6 +38,11 @@ namespace BeeSharp.Tests.Types
 
             // Assert
             ((string)t).Should().Be("a");
+        }
+
+        protected override Trimmed Create(string b)
+        {
+            throw new NotImplementedException();
         }
     }
 }

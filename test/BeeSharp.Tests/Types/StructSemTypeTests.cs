@@ -4,7 +4,7 @@ using Xunit;
 
 namespace BeeSharp.Tests.Types
 {
-    public abstract class StructSemTypeTests<T> : SemTypeTests<T>
+    public abstract class StructSemTypeTests<T, TBase> : SemTypeTests<T, TBase>
         where T : struct, IEquatable<T>, IComparable<T>
     {
         [Fact]

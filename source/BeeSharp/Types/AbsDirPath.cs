@@ -22,6 +22,9 @@ namespace BeeSharp.Types
 
         public static implicit operator string(AbsDirPath p) => p.value;
 
+        public static AbsFilePath operator /(AbsDirPath d, FileName f)
+            => new AbsFilePath($"{(string)d}{(string)f}");
+
         public override string ToString() => this.value;
 
         private static string Fixup(string s)

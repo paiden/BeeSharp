@@ -1,12 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 
 namespace BeeSharp.Tests.Types
 {
-    public abstract class SemTypeTests<T>
+    public abstract class SemTypeTests<T, TBase>
         where T : IEquatable<T>, IComparable<T>
     {
+        [Fact]
+        public void GivenInvalidInitValues_NewThrowsArgExc()
+        {
+            foreach (var iv in this.InvalidInitValues) // Parameterized test not possible as member cannot be static
+            {
+                // Act
+                Action a = () => this.Create(iv);
+
+                // Assert
+                a.Should().Throw<ArgumentException>();
+            }
+        }
+
+
         [Fact]
         public void GivenDiffRefButSameVal_EquatableEqualsIsTrue()
         {
@@ -128,5 +143,7 @@ namespace BeeSharp.Tests.Types
 
         protected abstract T CreateX();
         protected abstract T CreateY();
+        protected abstract T Create(TBase b);
+        protected abstract IEnumerable<TBase> InvalidInitValues { get; }
     }
 }
