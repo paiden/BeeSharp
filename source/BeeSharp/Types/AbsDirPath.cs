@@ -39,8 +39,10 @@ namespace BeeSharp.Types
 
         private static string Check(string s)
         {
+            int ti;
             if (!Path.IsPathRooted(s)) { throw new ArgumentException($"'{s}' is not an absolute directory path as it is not rooted."); }
             if (!s.EndsWith(SepChar)) { throw new ArgumentException($"'{s}' is not an absolute directory path as it does not end with '{SepChar}'."); }
+            if ((ti = s.LastIndexOf(':')) > 1) { throw new ArgumentException($"Absolute directory path '{s}' contains invalid ':' at index {ti}."); }
 
             var _ = Path.GetFullPath(s);
 

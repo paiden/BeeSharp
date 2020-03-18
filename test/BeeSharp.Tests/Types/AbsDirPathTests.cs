@@ -54,7 +54,7 @@ namespace BeeSharp.Tests.Types
             p.Should().Be(AbsDirPath.New(expected));
         }
 
-        [Theory(Skip = "Probably not working because of a .net core fx bug: https://stackoverflow.com/questions/60634204/getfullpath-behavior-in-net-core-3-1-2-differs-from-net-4-6-1")]
+        [Theory]
         [InlineData(@"C:\test:")]
         public void GivenPathWithUncorrectableUserInputErrors_ReturnsErrorRes(string input)
         {

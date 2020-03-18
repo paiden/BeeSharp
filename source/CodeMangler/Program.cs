@@ -27,13 +27,20 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using static System.Diagnostics.Debug;
+
 using BeeSharp.Extensions;
+using BeeSharp.Internal;
 using BeeSharp.Utils;
 using BeeSharp.Validation;
+
+using static BeeSharp.Internal.PathStringUtils;
 
 ";
 

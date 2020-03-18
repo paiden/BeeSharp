@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BeeSharp.Types;
+using FluentAssertions;
+using Xunit;
 
 namespace BeeSharp.Tests.Types
 {
@@ -17,5 +19,18 @@ namespace BeeSharp.Tests.Types
         protected override bool InvokeEqualsOp(RelDirPath x, RelDirPath y) => x == y;
 
         protected override bool InvokeNotEqualsOp(RelDirPath x, RelDirPath y) => x != y;
+
+        [Theory]
+        [InlineData(@"..\abc\..\", @"..\")]
+        [InlineData(@"..\abc\.", @"..\abc\")]
+        [InlineData(@"..\abc\..\cde\.", @"..\cde\")]
+        public void Of_NormalizesPath(string input, string expected)
+        {
+            // Act
+            var p = RelDirPath.Of(input);
+
+            // Assert
+            ((string)p).Should().Be(expected);
+        }
     }
 }

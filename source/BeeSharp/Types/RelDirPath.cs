@@ -1,4 +1,6 @@
 ﻿using System;
+using BeeSharp.Extensions;
+using static BeeSharp.Internal.PathStringUtils;
 
 namespace BeeSharp.Types
 {
@@ -6,7 +8,7 @@ namespace BeeSharp.Types
     {
         public static RelDirPath New(string p) => new RelDirPath(Check(p));
 
-        public static RelDirPath Of(string p) => new RelDirPath(p);
+        public static RelDirPath Of(string p) => new RelDirPath(Check(Fixup(p)));
 
         public static RelDirPath UncheckedNew(string p) => new RelDirPath(p);
 
@@ -17,6 +19,11 @@ namespace BeeSharp.Types
         public override bool Equals(object obj) => obj is RelDirPath rdp && this.Equals(rdp);
 
         public override int GetHashCode() => this.value.GetHashCode();
+
+        private static string Fixup(string s)
+            => Normalize(s.Replace(AltSeparator, Separator)
+            .Trim())
+            .EnsureEndsWith(Separator);
 
         private static string Check(string s)
         {
