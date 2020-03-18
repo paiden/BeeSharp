@@ -8,7 +8,7 @@ namespace BeeSharp.Tests.Types
 {
     public class CIStringTests : StructSemTypeTests<CIString, string>
     {
-        protected override IEnumerable<string> InvalidInitValues => Enumerable.Empty<string>();
+        protected override IEnumerable<string> InvalidNewValues => Enumerable.Empty<string>();
 
         [Fact]
         public void WhenComparing_CasingIsIgnored()
@@ -24,9 +24,9 @@ namespace BeeSharp.Tests.Types
             r.Should().BeTrue();
         }
 
-        protected override CIString Create(string b) => CIString.New("x");
-        protected override CIString CreateX() => CIString.New("x");
-        protected override CIString CreateY() => CIString.New("y");
+        protected override CIString New(string b) => CIString.New("x");
+        protected override CIString NewX() => CIString.New("x");
+        protected override CIString NewY() => CIString.New("y");
         protected override bool InvokeEqualsOp(CIString x, CIString y) => x == y;
         protected override bool InvokeNotEqualsOp(CIString x, CIString y) => x != y;
     }

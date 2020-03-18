@@ -8,7 +8,7 @@ namespace BeeSharp.Tests.Types
 {
     public sealed class AbsDirPathTests : StructSemTypeTests<AbsDirPath, string>
     {
-        protected override IEnumerable<string> InvalidInitValues
+        protected override IEnumerable<string> InvalidNewValues
         {
             get
             {
@@ -17,9 +17,9 @@ namespace BeeSharp.Tests.Types
             }
         }
 
-        protected override AbsDirPath CreateX() => AbsDirPath.New(@"C:\X\");
+        protected override AbsDirPath NewX() => AbsDirPath.New(@"C:\X\");
 
-        protected override AbsDirPath CreateY() => AbsDirPath.New(@"C:\Y\");
+        protected override AbsDirPath NewY() => AbsDirPath.New(@"C:\Y\");
 
         protected override bool InvokeEqualsOp(AbsDirPath x, AbsDirPath y) => x == y;
 
@@ -79,6 +79,23 @@ namespace BeeSharp.Tests.Types
             fp.Should().Be(AbsFilePath.New(@"C:\test\test.txt"));
         }
 
-        protected override AbsDirPath Create(string b) => AbsDirPath.New(b);
+        [Theory]
+        [InlineData(@"C:\test\", @"..\", @"C:\")]
+        [InlineData(@"C:\test\", @".\x\", @"C:\test\x\")]
+        [InlineData(@"C:\test\abc\", @"..\x\", @"C:\test\x\")]
+        public void GivenAbsPath_WhenCombinedWithRelDirPath_IsNewAbsDirPath(string abs, string rel, string expected)
+        {
+            // Arrange
+            var ap = AbsDirPath.New(abs);
+            var rdp = RelDirPath.New(rel);
+
+            // Act
+            var r = ap / rdp;
+
+            // Assert
+            r.Should().Be(AbsDirPath.New(expected));
+        }
+
+        protected override AbsDirPath New(string b) => AbsDirPath.New(b);
     }
 }

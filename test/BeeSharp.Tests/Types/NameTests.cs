@@ -8,7 +8,7 @@ namespace BeeSharp.Tests.Types
 {
     public sealed class NameTests : StructSemTypeTests<Name, string>
     {
-        protected override IEnumerable<string> InvalidInitValues
+        protected override IEnumerable<string> InvalidNewValues
         {
             get
             {
@@ -36,14 +36,14 @@ namespace BeeSharp.Tests.Types
             ((string)n).Should().Be("a");
         }
 
-        protected override Name CreateX() => Name.New("X");
+        protected override Name NewX() => Name.New("X");
 
-        protected override Name CreateY() => Name.New("Y");
+        protected override Name NewY() => Name.New("Y");
 
         protected override bool InvokeEqualsOp(Name x, Name y) => x == y;
 
         protected override bool InvokeNotEqualsOp(Name x, Name y) => x != y;
 
-        protected override Name Create(string b) => Name.New(b);
+        protected override Name New(string b) => Name.New(b);
     }
 }

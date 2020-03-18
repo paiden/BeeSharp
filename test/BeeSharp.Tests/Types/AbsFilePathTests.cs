@@ -8,7 +8,7 @@ namespace BeeSharp.Tests.Types
 {
     public sealed class AbsFilePathTests : StructSemTypeTests<AbsFilePath, string>
     {
-        protected override IEnumerable<string> InvalidInitValues
+        protected override IEnumerable<string> InvalidNewValues
         {
             get
             {
@@ -16,9 +16,9 @@ namespace BeeSharp.Tests.Types
             }
         }
 
-        protected override AbsFilePath CreateX() => AbsFilePath.New(@"C:\test");
+        protected override AbsFilePath NewX() => AbsFilePath.New(@"C:\test");
 
-        protected override AbsFilePath CreateY() => AbsFilePath.New(@"C:\test.txt");
+        protected override AbsFilePath NewY() => AbsFilePath.New(@"C:\test.txt");
 
         protected override bool InvokeEqualsOp(AbsFilePath x, AbsFilePath y) => x == y;
 
@@ -84,6 +84,6 @@ namespace BeeSharp.Tests.Types
             e.Should().NotBeNull();
         }
 
-        protected override AbsFilePath Create(string b) => AbsFilePath.New(b);
+        protected override AbsFilePath New(string b) => AbsFilePath.New(b);
     }
 }

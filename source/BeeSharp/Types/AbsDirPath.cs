@@ -25,6 +25,9 @@ namespace BeeSharp.Types
         public static AbsFilePath operator /(AbsDirPath d, FileName f)
             => new AbsFilePath($"{(string)d}{(string)f}");
 
+        public static AbsDirPath operator /(AbsDirPath ap, RelDirPath rp)
+            => new AbsDirPath($"{Path.GetFullPath($"{(string)ap}{(string)rp}")}");
+
         public override string ToString() => this.value;
 
         private static string Fixup(string s)
@@ -43,6 +46,5 @@ namespace BeeSharp.Types
 
             return s;
         }
-
     }
 }

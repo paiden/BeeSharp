@@ -8,11 +8,11 @@ namespace BeeSharp.Tests.Types
 {
     public sealed class TrimmedTests : StructSemTypeTests<Trimmed, string>
     {
-        protected override IEnumerable<string> InvalidInitValues { get { yield break; } }
+        protected override IEnumerable<string> InvalidNewValues { get { yield break; } }
 
-        protected override Trimmed CreateX() => Trimmed.New("x");
+        protected override Trimmed NewX() => Trimmed.New("x");
 
-        protected override Trimmed CreateY() => Trimmed.New("y");
+        protected override Trimmed NewY() => Trimmed.New("y");
 
         protected override bool InvokeEqualsOp(Trimmed x, Trimmed y) => x == y;
 
@@ -40,7 +40,7 @@ namespace BeeSharp.Tests.Types
             ((string)t).Should().Be("a");
         }
 
-        protected override Trimmed Create(string b)
+        protected override Trimmed New(string b)
         {
             throw new NotImplementedException();
         }

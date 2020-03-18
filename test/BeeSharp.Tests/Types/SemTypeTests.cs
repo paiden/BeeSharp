@@ -11,13 +11,13 @@ namespace BeeSharp.Tests.Types
         [Fact]
         public void GivenInvalidInitValues_NewThrowsArgExc()
         {
-            foreach (var iv in this.InvalidInitValues) // Parameterized test not possible as member cannot be static
+            foreach (var iv in this.InvalidNewValues) // Parameterized test not possible as member cannot be static
             {
                 // Act
-                Action a = () => this.Create(iv);
+                Action a = () => this.New(iv);
 
                 // Assert
-                a.Should().Throw<ArgumentException>();
+                a.Should().Throw<ArgumentException>($"'{iv}' is not a valid 'new' input for data type '{typeof(T)}'.");
             }
         }
 
@@ -26,8 +26,8 @@ namespace BeeSharp.Tests.Types
         public void GivenDiffRefButSameVal_EquatableEqualsIsTrue()
         {
             // Arrange
-            var x = this.CreateX();
-            var y = this.CreateX();
+            var x = this.NewX();
+            var y = this.NewX();
             x.Should().NotBeSameAs(y);
 
             // Act
@@ -41,8 +41,8 @@ namespace BeeSharp.Tests.Types
         public void GivenDiffRefButSameVal_ObjectEqualsIsTrue()
         {
             // Arrange
-            var x = this.CreateX();
-            var y = this.CreateX();
+            var x = this.NewX();
+            var y = this.NewX();
             x.Should().NotBeSameAs(y);
 
             // Act
@@ -56,7 +56,7 @@ namespace BeeSharp.Tests.Types
         public void EqualsWithNullIsFAlse()
         {
             // Arrange
-            var x = this.CreateX();
+            var x = this.NewX();
 
             // Act
             var r = x.Equals(null);
@@ -69,8 +69,8 @@ namespace BeeSharp.Tests.Types
         public void GivenDiffValues_EqualsIsFalse()
         {
             // Arrange
-            var x = this.CreateX();
-            var y = this.CreateY();
+            var x = this.NewX();
+            var y = this.NewY();
 
             // Act
             var r = x.Equals(y);
@@ -83,8 +83,8 @@ namespace BeeSharp.Tests.Types
         public void WhenComparingXToY_ResultIsNegOne()
         {
             // Arrange
-            var x = this.CreateX();
-            var y = this.CreateY();
+            var x = this.NewX();
+            var y = this.NewY();
 
             // Act
             var r = x.CompareTo(y);
@@ -98,8 +98,8 @@ namespace BeeSharp.Tests.Types
         public void WhenComparingXToX_ResultIsZero()
         {
             // Arrange
-            var x = this.CreateX();
-            var y = this.CreateX();
+            var x = this.NewX();
+            var y = this.NewX();
 
             // Act
             var r = x.CompareTo(y);
@@ -113,8 +113,8 @@ namespace BeeSharp.Tests.Types
         public void WhenComparingYToX_ResultIsPosOne()
         {
             // Arrange
-            var x = this.CreateY();
-            var y = this.CreateX();
+            var x = this.NewY();
+            var y = this.NewX();
 
             // Act
             var r = x.CompareTo(y);
@@ -127,9 +127,9 @@ namespace BeeSharp.Tests.Types
         public void ImplementsGetHashCode()
         {
             // Arrange
-            var x1 = this.CreateX();
-            var x2 = this.CreateX();
-            var y = this.CreateY();
+            var x1 = this.NewX();
+            var x2 = this.NewX();
+            var y = this.NewY();
 
             // Act
             var x1h = x1.GetHashCode();
@@ -141,9 +141,12 @@ namespace BeeSharp.Tests.Types
             x1h.Should().NotBe(yh);
         }
 
-        protected abstract T CreateX();
-        protected abstract T CreateY();
-        protected abstract T Create(TBase b);
-        protected abstract IEnumerable<TBase> InvalidInitValues { get; }
+        protected abstract T NewX();
+        protected abstract T NewY();
+        protected abstract T New(TBase b);
+        protected abstract IEnumerable<TBase> InvalidNewValues { get; }
+
+        protected static IEnumerable<TA> Enum<TA>(params TA[] args)
+            => args;
     }
 }

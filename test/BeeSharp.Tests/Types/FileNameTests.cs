@@ -5,7 +5,7 @@ namespace BeeSharp.Tests.Types
 {
     public sealed class FileNameTests : StructSemTypeTests<FileName, string>
     {
-        protected override IEnumerable<string> InvalidInitValues
+        protected override IEnumerable<string> InvalidNewValues
         {
             get
             {
@@ -13,11 +13,11 @@ namespace BeeSharp.Tests.Types
             }
         }
 
-        protected override FileName Create(string b) => FileName.New(b);
+        protected override FileName New(string b) => FileName.New(b);
 
-        protected override FileName CreateX() => FileName.New("x.txt");
+        protected override FileName NewX() => FileName.New("x.txt");
 
-        protected override FileName CreateY() => FileName.New("y.txt");
+        protected override FileName NewY() => FileName.New("y.txt");
 
         protected override bool InvokeEqualsOp(FileName x, FileName y) => x == y;
 

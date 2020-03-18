@@ -11,8 +11,8 @@ namespace BeeSharp.Tests.Types
         public void EqualOp_ReturnsCorrectResult()
         {
             // Arrange
-            var x = this.CreateX();
-            var y = this.CreateY();
+            var x = this.NewX();
+            var y = this.NewY();
 
             x.Should().NotBeSameAs(y);
 
@@ -29,8 +29,8 @@ namespace BeeSharp.Tests.Types
         public void NotEqualOp_ReturnsCorrectResult()
         {
             // Arrange
-            var x = this.CreateX();
-            var y = this.CreateY();
+            var x = this.NewX();
+            var y = this.NewY();
 
             x.Should().NotBeSameAs(y);
 
