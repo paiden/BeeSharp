@@ -43,6 +43,9 @@ namespace BeeSharp.Types
         public static Error FromException(Exception exc)
             => new Error(ErrorType.Unspecifed, exc.Message, exc.StackTrace);
 
+        public static Error InvalidArgument(string message)
+            => new Error(ErrorType.InvalidArgument, message, new StackTrace().ToString());
+
         public static implicit operator bool(Error err) => err != null;
 
         public Res<T> AsResOf<T>() => Res<T>.Err(this);

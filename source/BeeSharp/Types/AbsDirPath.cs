@@ -6,6 +6,8 @@ namespace BeeSharp.Types
 {
     public partial struct AbsDirPath : IConstrainedType<AbsDirPath>
     {
+        public static readonly AbsDirPath Current = Of(Directory.GetCurrentDirectory()).Unwrap();
+
         public static AbsDirPath New(string s) => new AbsDirPath(Check(s));
 
         public static AbsDirPath UncheckedNew(string s) => new AbsDirPath(s);
