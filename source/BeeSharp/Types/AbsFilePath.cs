@@ -1,11 +1,19 @@
 ﻿using System;
 using System.IO;
 
+using static BeeSharp.Internal.PathStringUtils;
+
 namespace BeeSharp.Types
 {
     public partial struct AbsFilePath : IConstrainedType<AbsFilePath>
     {
+        private readonly string value;
+
+        private AbsFilePath(string p) => this.value = p;
+
         public static AbsFilePath New(string p) => new AbsFilePath(Check(p));
+
+        public static AbsFilePath UncheckedNew(string p) => new AbsFilePath(p);
 
         public static Res<AbsFilePath> Of(string p) => Res.Try(() => new AbsFilePath(Check(Fixup(p))));
 
@@ -17,7 +25,7 @@ namespace BeeSharp.Types
 
         public int CompareTo(AbsFilePath other) => this.value.CompareTo(other.value);
 
-        public bool Equals(AbsFilePath other) => this.value == other.value;
+        public bool Equals(AbsFilePath other) => this.value.Equals(other.value, PathComparisonType);
 
         public override bool Equals(object obj) => obj is AbsFilePath fp && this.Equals(fp);
 

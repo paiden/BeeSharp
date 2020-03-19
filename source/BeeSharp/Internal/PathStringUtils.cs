@@ -23,15 +23,15 @@ namespace BeeSharp.Internal
 
         private static string ConstructPathFrom(IList<string> components, string original)
         {
-            bool addTrailingSepChar = original.Length > 0 && original[original.Length - 1] == Separator;
+            bool addTrailingSepChar = original.Length > 0 && original[original.Length - 1] == PathSeparator;
 
             var sb = new StringBuilder();
 
             for (int i = 0; i < original.Length; i++)
             {
-                if (original[i] == Separator)
+                if (original[i] == PathSeparator)
                 {
-                    sb.Append(Separator);
+                    sb.Append(PathSeparator);
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace BeeSharp.Internal
                 sb.Append(components[i]);
                 if (addTrailingSepChar || i != components.Count - 1)
                 {
-                    sb.Append(Separator);
+                    sb.Append(PathSeparator);
                 }
             }
 
@@ -53,7 +53,7 @@ namespace BeeSharp.Internal
 
         private static IList<string> ExtractUsefulComponents(string s)
         {
-            var pathParts = s.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
+            var pathParts = s.Split(PathSeparator, StringSplitOptions.RemoveEmptyEntries);
             var pathElements = new List<string>();
 
             foreach (var pathPart in pathParts)
