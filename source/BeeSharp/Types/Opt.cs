@@ -10,6 +10,8 @@ namespace BeeSharp.Types
         public static Opt<T> Some<T>(T value) => new Opt<T>(value);
 
         public static Opt<T> None<T>() => Opt<T>.None;
+
+        public static Opt<T> Of<T>(T value) => value == null ? None<T>() : Some(value);
     }
 
     public struct Opt<T>
