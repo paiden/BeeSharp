@@ -6,7 +6,7 @@
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>$(BeesVersion)</Version>
+    <Version>0.1.10</Version>
 
   </PropertyGroup>
 
@@ -16,6 +16,7 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
     <PackageOutputPath>$(ProjectDir)..\..\artifacts</PackageOutputPath>
+    <AssemblyVersion>0.1.10.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
