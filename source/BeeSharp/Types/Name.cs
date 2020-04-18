@@ -4,7 +4,8 @@ using BeeSharp.Validation;
 namespace BeeSharp.Types
 {
     /// <summary>
-    /// Type representing a trimmed string with at least one non whitespace character
+    /// Type representing a trimmed string with at least one non whitespace character.
+    /// Comparison is case insensitive.
     /// </summary>
     [DebuggerDisplay("{value, nq}")]
     public struct Name : IConstrainedType<Name>
@@ -24,7 +25,7 @@ namespace BeeSharp.Types
 
         public int CompareTo(Name other) => this.value.CompareTo(other.value);
 
-        public bool Equals(Name other) => this.value == other.value;
+        public bool Equals(Name other) => this.value.Equals(other.value, System.StringComparison.OrdinalIgnoreCase);
 
         public override int GetHashCode() => this.value.GetHashCode();
 
