@@ -61,6 +61,12 @@ namespace BeeSharp.Types
             ? Res.Ok(op(this.res.Unwrap()))
             : new Res<TNew>(this.err);
 
+        public Res<TNew> Cast<TNew>(Func<T, TNew> cast)
+        {
+            var val = this.res.IsSome ? Opt.Of(cast(this.res.Unwrap())) : Opt.None<TNew>();
+            return new Res<TNew>(val, this.err);
+        }
+
         public bool Contains(T v) => this.res && resEqComparer.Equals(this.res.Unwrap(), v);
 
         public bool ContainsErr(Error err) => this.err != null && Error.Comparer.Equals(this.err, err);
