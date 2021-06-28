@@ -102,6 +102,10 @@ namespace BeeSharp.Types
         public T Unwrap() => this.res
             ? this.res.Unwrap()
             : throw new InvalidOperationException($"Cannot unwrap result on 'Error' with value '{this.err}'");
+        
+        public T UnwrapOr(T or) => this.res
+            ? this.res.Unwrap()
+            : or;
 
         public Error UnwrapErr()
             => this.err ?? throw new InvalidOperationException($"Cannot unwrap error on 'Ok' with value '{this.res.Unwrap()}'.");
