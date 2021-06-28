@@ -35,6 +35,8 @@ void GenerateOptOfClass(int numTypeArgs)
 
 <#Do(numTypeArgs);#>
 
+<#Unwrap(numTypeArgs);#>
+
 <#Equals(numTypeArgs);#>
 
         public override bool Equals(object? other) => this.Equals(other as Union<#=TypeArgs(numTypeArgs)#>);
@@ -69,6 +71,27 @@ void Field(int numTypeArgs, int cur)
 {
 #>
         private readonly Opt<T<#=cur#>> <#=FieldName(cur)#>;
+<#
+}
+#>
+
+<#
+void Unwrap(int numTypeArgs)
+{
+#>
+        public T Unwrap<T>() 
+        {
+<#
+            for(int i = 0; i < numTypeArgs; i++)
+            {
+#>
+            if(typeof(T) == typeof(T<#=i#>)) { return (T)(object)this.<#=FieldName(i)#>.Unwrap()!; }
+<#
+            }
+#>
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
 <#
 }
 #>

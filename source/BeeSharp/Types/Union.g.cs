@@ -24,6 +24,14 @@ namespace BeeSharp.Types
             this.ofT0.DoOrElse(d0,
             () => this.ofT1.Do(d1));
 
+        public T Unwrap<T>() 
+        {
+            if(typeof(T) == typeof(T0)) { return (T)(object)this.ofT0.Unwrap()!; }
+            if(typeof(T) == typeof(T1)) { return (T)(object)this.ofT1.Unwrap()!; }
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
+
         public bool Equals(Union<T0, T1>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
@@ -62,6 +70,15 @@ namespace BeeSharp.Types
             this.ofT0.DoOrElse(d0,
             () => this.ofT1.DoOrElse(d1,
             () => this.ofT2.Do(d2)));
+
+        public T Unwrap<T>() 
+        {
+            if(typeof(T) == typeof(T0)) { return (T)(object)this.ofT0.Unwrap()!; }
+            if(typeof(T) == typeof(T1)) { return (T)(object)this.ofT1.Unwrap()!; }
+            if(typeof(T) == typeof(T2)) { return (T)(object)this.ofT2.Unwrap()!; }
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
 
         public bool Equals(Union<T0, T1, T2>? other)
         {
@@ -107,6 +124,16 @@ namespace BeeSharp.Types
             () => this.ofT1.DoOrElse(d1,
             () => this.ofT2.DoOrElse(d2,
             () => this.ofT3.Do(d3))));
+
+        public T Unwrap<T>() 
+        {
+            if(typeof(T) == typeof(T0)) { return (T)(object)this.ofT0.Unwrap()!; }
+            if(typeof(T) == typeof(T1)) { return (T)(object)this.ofT1.Unwrap()!; }
+            if(typeof(T) == typeof(T2)) { return (T)(object)this.ofT2.Unwrap()!; }
+            if(typeof(T) == typeof(T3)) { return (T)(object)this.ofT3.Unwrap()!; }
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
 
         public bool Equals(Union<T0, T1, T2, T3>? other)
         {
@@ -158,6 +185,17 @@ namespace BeeSharp.Types
             () => this.ofT2.DoOrElse(d2,
             () => this.ofT3.DoOrElse(d3,
             () => this.ofT4.Do(d4)))));
+
+        public T Unwrap<T>() 
+        {
+            if(typeof(T) == typeof(T0)) { return (T)(object)this.ofT0.Unwrap()!; }
+            if(typeof(T) == typeof(T1)) { return (T)(object)this.ofT1.Unwrap()!; }
+            if(typeof(T) == typeof(T2)) { return (T)(object)this.ofT2.Unwrap()!; }
+            if(typeof(T) == typeof(T3)) { return (T)(object)this.ofT3.Unwrap()!; }
+            if(typeof(T) == typeof(T4)) { return (T)(object)this.ofT4.Unwrap()!; }
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
 
         public bool Equals(Union<T0, T1, T2, T3, T4>? other)
         {
@@ -215,6 +253,18 @@ namespace BeeSharp.Types
             () => this.ofT3.DoOrElse(d3,
             () => this.ofT4.DoOrElse(d4,
             () => this.ofT5.Do(d5))))));
+
+        public T Unwrap<T>() 
+        {
+            if(typeof(T) == typeof(T0)) { return (T)(object)this.ofT0.Unwrap()!; }
+            if(typeof(T) == typeof(T1)) { return (T)(object)this.ofT1.Unwrap()!; }
+            if(typeof(T) == typeof(T2)) { return (T)(object)this.ofT2.Unwrap()!; }
+            if(typeof(T) == typeof(T3)) { return (T)(object)this.ofT3.Unwrap()!; }
+            if(typeof(T) == typeof(T4)) { return (T)(object)this.ofT4.Unwrap()!; }
+            if(typeof(T) == typeof(T5)) { return (T)(object)this.ofT5.Unwrap()!; }
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
 
         public bool Equals(Union<T0, T1, T2, T3, T4, T5>? other)
         {
@@ -278,6 +328,19 @@ namespace BeeSharp.Types
             () => this.ofT4.DoOrElse(d4,
             () => this.ofT5.DoOrElse(d5,
             () => this.ofT6.Do(d6)))))));
+
+        public T Unwrap<T>() 
+        {
+            if(typeof(T) == typeof(T0)) { return (T)(object)this.ofT0.Unwrap()!; }
+            if(typeof(T) == typeof(T1)) { return (T)(object)this.ofT1.Unwrap()!; }
+            if(typeof(T) == typeof(T2)) { return (T)(object)this.ofT2.Unwrap()!; }
+            if(typeof(T) == typeof(T3)) { return (T)(object)this.ofT3.Unwrap()!; }
+            if(typeof(T) == typeof(T4)) { return (T)(object)this.ofT4.Unwrap()!; }
+            if(typeof(T) == typeof(T5)) { return (T)(object)this.ofT5.Unwrap()!; }
+            if(typeof(T) == typeof(T6)) { return (T)(object)this.ofT6.Unwrap()!; }
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
 
         public bool Equals(Union<T0, T1, T2, T3, T4, T5, T6>? other)
         {
@@ -348,6 +411,20 @@ namespace BeeSharp.Types
             () => this.ofT6.DoOrElse(d6,
             () => this.ofT7.Do(d7))))))));
 
+        public T Unwrap<T>() 
+        {
+            if(typeof(T) == typeof(T0)) { return (T)(object)this.ofT0.Unwrap()!; }
+            if(typeof(T) == typeof(T1)) { return (T)(object)this.ofT1.Unwrap()!; }
+            if(typeof(T) == typeof(T2)) { return (T)(object)this.ofT2.Unwrap()!; }
+            if(typeof(T) == typeof(T3)) { return (T)(object)this.ofT3.Unwrap()!; }
+            if(typeof(T) == typeof(T4)) { return (T)(object)this.ofT4.Unwrap()!; }
+            if(typeof(T) == typeof(T5)) { return (T)(object)this.ofT5.Unwrap()!; }
+            if(typeof(T) == typeof(T6)) { return (T)(object)this.ofT6.Unwrap()!; }
+            if(typeof(T) == typeof(T7)) { return (T)(object)this.ofT7.Unwrap()!; }
+
+            throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
+        }
+
         public bool Equals(Union<T0, T1, T2, T3, T4, T5, T6, T7>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
@@ -370,6 +447,7 @@ namespace BeeSharp.Types
     }
 
 }
+
 
 
 
