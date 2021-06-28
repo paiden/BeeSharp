@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29721.120
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp", "source\BeeSharp\BeeSharp.csproj", "{7534AC29-10F4-4C3B-AA31-B652C720E26B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -30,6 +30,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".infra", ".infra", "{4FF8A3
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeSharp.Package.Test", "test\BeeSharp.Package.Tests\BeeSharp.Package.Test.csproj", "{82F075D8-3632-4FE7-91C3-19974D52A476}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD8ACEE9-1124-40CA-99D6-2B066712922A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

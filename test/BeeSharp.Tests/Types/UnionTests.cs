@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading;
 using BeeSharp.Types;
 using FluentAssertions;
@@ -8,6 +9,28 @@ using Xunit;
 
 namespace BeeSharp.Tests.Types
 {
+    internal class Person
+    {
+        public Union<Unborn, Living, Dead> state = new Unborn();
+
+        public struct Unborn
+        {
+        }
+        public struct Living
+        {
+            string Name;
+            DateTime DateOfBirth;
+        }
+        public struct Dead
+        {
+            string Name;
+            DateTime DateOfBirth;
+        }
+    }
+
+    static void PrintPerson(Person p)
+
+
     public class UnionTests
     {
         private const int IDef = 1;
