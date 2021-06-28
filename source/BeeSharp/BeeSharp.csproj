@@ -6,7 +6,7 @@
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>0.1.10</Version>
+    <Version>0.1.11</Version>
 
   </PropertyGroup>
 
@@ -44,6 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
     <None Include="..\BeeSharp.Analyzer\bin\$(Configuration)\netstandard2.0\BeeSharp.Analyzer.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="..\..\artifacts\BeeSharp.g.cs.pp" Pack="true" Visible="false" BuildAction="Compile" />
   </ItemGroup>
