@@ -98,7 +98,9 @@ using static BeeSharp.Internal.PathStringUtils;
                     if (o.Template)
                     {
                         sb.Replace("namespace BeeSharp", "namespace $rootnamespace$")
-                            .Replace("using BeeSharp", "using $rootnamespace$");
+                            .Replace("using BeeSharp", "using $rootnamespace$")
+                            .Replace("using static BeeSharp", "using static $rootnamespace$");
+
                         File.WriteAllText($"{o.OutputFile}.pp", sb.ToString(), Encoding.UTF8);
                     }
                 });
