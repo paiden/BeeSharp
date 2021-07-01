@@ -4,25 +4,6 @@ using Xunit;
 
 namespace BeeSharp.Tests.Threading
 {
-    struct State { }
-    class ThreadSafe
-    {
-        private readonly Locked<State> _state = new Locked<State>(new State());
-
-        public void m1(State ns)
-        {
-            using var w = _state.WriteAccess(); 
-            w.Value = ns;
-        }
-
-        // a few 100 lines down this new method was added by dev XXY
-        public void m100(object ns)
-        {
-            using var r = _state.WriteAccess();
-            r.Value = ns;
-        }
-    }
-
     public class LockedTests
     {
         [Fact]

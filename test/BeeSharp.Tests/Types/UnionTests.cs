@@ -28,9 +28,6 @@ namespace BeeSharp.Tests.Types
         }
     }
 
-    static void PrintPerson(Person p)
-
-
     public class UnionTests
     {
         private const int IDef = 1;

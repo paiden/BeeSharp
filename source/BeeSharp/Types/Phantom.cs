@@ -1,4 +1,6 @@
-﻿namespace BeeSharp.Types
+﻿using System.Diagnostics;
+
+namespace BeeSharp.Types
 {
     public record Phantom<T, TPhantomTrait>
     {
