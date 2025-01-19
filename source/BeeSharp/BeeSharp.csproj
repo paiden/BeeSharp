@@ -6,7 +6,7 @@
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>0.1.13</Version>
+    <Version>0.1.15</Version>
 
   </PropertyGroup>
 
@@ -54,7 +54,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="&quot;$(ProjectDir)..\CodeMangler\bin\$(Configuration)\netcoreapp3.1\CodeMangler.exe&quot; -i &quot;$(ProjectDir) &quot; -o &quot;$(ProjectDir)\..\..\artifacts\BeeSharp.g.cs&quot;" />
+    <Exec Command="&quot;$(ProjectDir)..\CodeMangler\bin\$(Configuration)\net8.0\CodeMangler.exe&quot; -i &quot;$(ProjectDir) &quot; -o &quot;$(ProjectDir)\..\..\artifacts\BeeSharp.g.cs&quot;" />
   </Target>
 
 </Project>

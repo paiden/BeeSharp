@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+
 using BeeSharp.Validation;
 
 namespace BeeSharp.Types
@@ -36,5 +37,7 @@ namespace BeeSharp.Types
         public static bool operator !=(Name x, Name y) => !x.Equals(y);
 
         public static implicit operator string(Name n) => n.value;
+
+        public override readonly string ToString() => this.value;
     }
 }
