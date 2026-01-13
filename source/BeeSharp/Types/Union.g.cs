@@ -5,16 +5,16 @@ using System;
 
 namespace BeeSharp.Types
 {
-    public sealed class Union<T0, T1> : IEquatable<Union<T0, T1>>
+    public sealed class U<T0, T1> : IEquatable<U<T0, T1>>
     {
         private readonly Opt<T0> ofT0;
         private readonly Opt<T1> ofT1;
 
-        public Union(T0 of) => this.ofT0 = Opt.Some(of);
-        public Union(T1 of) => this.ofT1 = Opt.Some(of);
+        public U(T0 of) => this.ofT0 = Opt.Some(of);
+        public U(T1 of) => this.ofT1 = Opt.Some(of);
 
-        public static implicit operator Union<T0, T1>(T0 of) => new Union<T0, T1>(of);
-        public static implicit operator Union<T0, T1>(T1 of) => new Union<T0, T1>(of);
+        public static implicit operator U<T0, T1>(T0 of) => new U<T0, T1>(of);
+        public static implicit operator U<T0, T1>(T1 of) => new U<T0, T1>(of);
 
         public T Map<T>(Func<T0, T> m0, Func<T1, T> m1) =>
             this.ofT0.MapOrElse(m0,
@@ -32,7 +32,7 @@ namespace BeeSharp.Types
             throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
         }
 
-        public bool Equals(Union<T0, T1>? other)
+        public bool Equals(U<T0, T1>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -41,25 +41,33 @@ namespace BeeSharp.Types
                 && this.ofT1.Equals(other.ofT1);
         }
 
-        public override bool Equals(object? other) => this.Equals(other as Union<T0, T1>);
+        public override string ToString() 
+        {
+            var value = this.ofT0.MapOrElse(x => x.ToString(),
+                    () => this.ofT1.Map(x => x.ToString()
+            )).Unwrap();
+            return $"U{{{value}}}";
+        }
+
+        public override bool Equals(object? other) => this.Equals(other as U<T0, T1>);
 
         public override int GetHashCode()
             => HashCode.Combine(this.ofT0, this.ofT1);
     }
 
-    public sealed class Union<T0, T1, T2> : IEquatable<Union<T0, T1, T2>>
+    public sealed class U<T0, T1, T2> : IEquatable<U<T0, T1, T2>>
     {
         private readonly Opt<T0> ofT0;
         private readonly Opt<T1> ofT1;
         private readonly Opt<T2> ofT2;
 
-        public Union(T0 of) => this.ofT0 = Opt.Some(of);
-        public Union(T1 of) => this.ofT1 = Opt.Some(of);
-        public Union(T2 of) => this.ofT2 = Opt.Some(of);
+        public U(T0 of) => this.ofT0 = Opt.Some(of);
+        public U(T1 of) => this.ofT1 = Opt.Some(of);
+        public U(T2 of) => this.ofT2 = Opt.Some(of);
 
-        public static implicit operator Union<T0, T1, T2>(T0 of) => new Union<T0, T1, T2>(of);
-        public static implicit operator Union<T0, T1, T2>(T1 of) => new Union<T0, T1, T2>(of);
-        public static implicit operator Union<T0, T1, T2>(T2 of) => new Union<T0, T1, T2>(of);
+        public static implicit operator U<T0, T1, T2>(T0 of) => new U<T0, T1, T2>(of);
+        public static implicit operator U<T0, T1, T2>(T1 of) => new U<T0, T1, T2>(of);
+        public static implicit operator U<T0, T1, T2>(T2 of) => new U<T0, T1, T2>(of);
 
         public T Map<T>(Func<T0, T> m0, Func<T1, T> m1, Func<T2, T> m2) =>
             this.ofT0.MapOrElse(m0,
@@ -80,7 +88,7 @@ namespace BeeSharp.Types
             throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
         }
 
-        public bool Equals(Union<T0, T1, T2>? other)
+        public bool Equals(U<T0, T1, T2>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -90,28 +98,37 @@ namespace BeeSharp.Types
                 && this.ofT2.Equals(other.ofT2);
         }
 
-        public override bool Equals(object? other) => this.Equals(other as Union<T0, T1, T2>);
+        public override string ToString() 
+        {
+            var value = this.ofT0.MapOrElse(x => x.ToString(),
+                () => this.ofT1.MapOrElse(x => x.ToString(), 
+                    () => this.ofT2.Map(x => x.ToString()
+            ))).Unwrap();
+            return $"U{{{value}}}";
+        }
+
+        public override bool Equals(object? other) => this.Equals(other as U<T0, T1, T2>);
 
         public override int GetHashCode()
             => HashCode.Combine(this.ofT0, this.ofT1, this.ofT2);
     }
 
-    public sealed class Union<T0, T1, T2, T3> : IEquatable<Union<T0, T1, T2, T3>>
+    public sealed class U<T0, T1, T2, T3> : IEquatable<U<T0, T1, T2, T3>>
     {
         private readonly Opt<T0> ofT0;
         private readonly Opt<T1> ofT1;
         private readonly Opt<T2> ofT2;
         private readonly Opt<T3> ofT3;
 
-        public Union(T0 of) => this.ofT0 = Opt.Some(of);
-        public Union(T1 of) => this.ofT1 = Opt.Some(of);
-        public Union(T2 of) => this.ofT2 = Opt.Some(of);
-        public Union(T3 of) => this.ofT3 = Opt.Some(of);
+        public U(T0 of) => this.ofT0 = Opt.Some(of);
+        public U(T1 of) => this.ofT1 = Opt.Some(of);
+        public U(T2 of) => this.ofT2 = Opt.Some(of);
+        public U(T3 of) => this.ofT3 = Opt.Some(of);
 
-        public static implicit operator Union<T0, T1, T2, T3>(T0 of) => new Union<T0, T1, T2, T3>(of);
-        public static implicit operator Union<T0, T1, T2, T3>(T1 of) => new Union<T0, T1, T2, T3>(of);
-        public static implicit operator Union<T0, T1, T2, T3>(T2 of) => new Union<T0, T1, T2, T3>(of);
-        public static implicit operator Union<T0, T1, T2, T3>(T3 of) => new Union<T0, T1, T2, T3>(of);
+        public static implicit operator U<T0, T1, T2, T3>(T0 of) => new U<T0, T1, T2, T3>(of);
+        public static implicit operator U<T0, T1, T2, T3>(T1 of) => new U<T0, T1, T2, T3>(of);
+        public static implicit operator U<T0, T1, T2, T3>(T2 of) => new U<T0, T1, T2, T3>(of);
+        public static implicit operator U<T0, T1, T2, T3>(T3 of) => new U<T0, T1, T2, T3>(of);
 
         public T Map<T>(Func<T0, T> m0, Func<T1, T> m1, Func<T2, T> m2, Func<T3, T> m3) =>
             this.ofT0.MapOrElse(m0,
@@ -135,7 +152,7 @@ namespace BeeSharp.Types
             throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
         }
 
-        public bool Equals(Union<T0, T1, T2, T3>? other)
+        public bool Equals(U<T0, T1, T2, T3>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -146,13 +163,23 @@ namespace BeeSharp.Types
                 && this.ofT3.Equals(other.ofT3);
         }
 
-        public override bool Equals(object? other) => this.Equals(other as Union<T0, T1, T2, T3>);
+        public override string ToString() 
+        {
+            var value = this.ofT0.MapOrElse(x => x.ToString(),
+                () => this.ofT1.MapOrElse(x => x.ToString(), 
+                () => this.ofT2.MapOrElse(x => x.ToString(), 
+                    () => this.ofT3.Map(x => x.ToString()
+            )))).Unwrap();
+            return $"U{{{value}}}";
+        }
+
+        public override bool Equals(object? other) => this.Equals(other as U<T0, T1, T2, T3>);
 
         public override int GetHashCode()
             => HashCode.Combine(this.ofT0, this.ofT1, this.ofT2, this.ofT3);
     }
 
-    public sealed class Union<T0, T1, T2, T3, T4> : IEquatable<Union<T0, T1, T2, T3, T4>>
+    public sealed class U<T0, T1, T2, T3, T4> : IEquatable<U<T0, T1, T2, T3, T4>>
     {
         private readonly Opt<T0> ofT0;
         private readonly Opt<T1> ofT1;
@@ -160,17 +187,17 @@ namespace BeeSharp.Types
         private readonly Opt<T3> ofT3;
         private readonly Opt<T4> ofT4;
 
-        public Union(T0 of) => this.ofT0 = Opt.Some(of);
-        public Union(T1 of) => this.ofT1 = Opt.Some(of);
-        public Union(T2 of) => this.ofT2 = Opt.Some(of);
-        public Union(T3 of) => this.ofT3 = Opt.Some(of);
-        public Union(T4 of) => this.ofT4 = Opt.Some(of);
+        public U(T0 of) => this.ofT0 = Opt.Some(of);
+        public U(T1 of) => this.ofT1 = Opt.Some(of);
+        public U(T2 of) => this.ofT2 = Opt.Some(of);
+        public U(T3 of) => this.ofT3 = Opt.Some(of);
+        public U(T4 of) => this.ofT4 = Opt.Some(of);
 
-        public static implicit operator Union<T0, T1, T2, T3, T4>(T0 of) => new Union<T0, T1, T2, T3, T4>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4>(T1 of) => new Union<T0, T1, T2, T3, T4>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4>(T2 of) => new Union<T0, T1, T2, T3, T4>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4>(T3 of) => new Union<T0, T1, T2, T3, T4>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4>(T4 of) => new Union<T0, T1, T2, T3, T4>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4>(T0 of) => new U<T0, T1, T2, T3, T4>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4>(T1 of) => new U<T0, T1, T2, T3, T4>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4>(T2 of) => new U<T0, T1, T2, T3, T4>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4>(T3 of) => new U<T0, T1, T2, T3, T4>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4>(T4 of) => new U<T0, T1, T2, T3, T4>(of);
 
         public T Map<T>(Func<T0, T> m0, Func<T1, T> m1, Func<T2, T> m2, Func<T3, T> m3, Func<T4, T> m4) =>
             this.ofT0.MapOrElse(m0,
@@ -197,7 +224,7 @@ namespace BeeSharp.Types
             throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
         }
 
-        public bool Equals(Union<T0, T1, T2, T3, T4>? other)
+        public bool Equals(U<T0, T1, T2, T3, T4>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -209,13 +236,24 @@ namespace BeeSharp.Types
                 && this.ofT4.Equals(other.ofT4);
         }
 
-        public override bool Equals(object? other) => this.Equals(other as Union<T0, T1, T2, T3, T4>);
+        public override string ToString() 
+        {
+            var value = this.ofT0.MapOrElse(x => x.ToString(),
+                () => this.ofT1.MapOrElse(x => x.ToString(), 
+                () => this.ofT2.MapOrElse(x => x.ToString(), 
+                () => this.ofT3.MapOrElse(x => x.ToString(), 
+                    () => this.ofT4.Map(x => x.ToString()
+            ))))).Unwrap();
+            return $"U{{{value}}}";
+        }
+
+        public override bool Equals(object? other) => this.Equals(other as U<T0, T1, T2, T3, T4>);
 
         public override int GetHashCode()
             => HashCode.Combine(this.ofT0, this.ofT1, this.ofT2, this.ofT3, this.ofT4);
     }
 
-    public sealed class Union<T0, T1, T2, T3, T4, T5> : IEquatable<Union<T0, T1, T2, T3, T4, T5>>
+    public sealed class U<T0, T1, T2, T3, T4, T5> : IEquatable<U<T0, T1, T2, T3, T4, T5>>
     {
         private readonly Opt<T0> ofT0;
         private readonly Opt<T1> ofT1;
@@ -224,19 +262,19 @@ namespace BeeSharp.Types
         private readonly Opt<T4> ofT4;
         private readonly Opt<T5> ofT5;
 
-        public Union(T0 of) => this.ofT0 = Opt.Some(of);
-        public Union(T1 of) => this.ofT1 = Opt.Some(of);
-        public Union(T2 of) => this.ofT2 = Opt.Some(of);
-        public Union(T3 of) => this.ofT3 = Opt.Some(of);
-        public Union(T4 of) => this.ofT4 = Opt.Some(of);
-        public Union(T5 of) => this.ofT5 = Opt.Some(of);
+        public U(T0 of) => this.ofT0 = Opt.Some(of);
+        public U(T1 of) => this.ofT1 = Opt.Some(of);
+        public U(T2 of) => this.ofT2 = Opt.Some(of);
+        public U(T3 of) => this.ofT3 = Opt.Some(of);
+        public U(T4 of) => this.ofT4 = Opt.Some(of);
+        public U(T5 of) => this.ofT5 = Opt.Some(of);
 
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5>(T0 of) => new Union<T0, T1, T2, T3, T4, T5>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5>(T1 of) => new Union<T0, T1, T2, T3, T4, T5>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5>(T2 of) => new Union<T0, T1, T2, T3, T4, T5>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5>(T3 of) => new Union<T0, T1, T2, T3, T4, T5>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5>(T4 of) => new Union<T0, T1, T2, T3, T4, T5>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5>(T5 of) => new Union<T0, T1, T2, T3, T4, T5>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5>(T0 of) => new U<T0, T1, T2, T3, T4, T5>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5>(T1 of) => new U<T0, T1, T2, T3, T4, T5>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5>(T2 of) => new U<T0, T1, T2, T3, T4, T5>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5>(T3 of) => new U<T0, T1, T2, T3, T4, T5>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5>(T4 of) => new U<T0, T1, T2, T3, T4, T5>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5>(T5 of) => new U<T0, T1, T2, T3, T4, T5>(of);
 
         public T Map<T>(Func<T0, T> m0, Func<T1, T> m1, Func<T2, T> m2, Func<T3, T> m3, Func<T4, T> m4, Func<T5, T> m5) =>
             this.ofT0.MapOrElse(m0,
@@ -266,7 +304,7 @@ namespace BeeSharp.Types
             throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
         }
 
-        public bool Equals(Union<T0, T1, T2, T3, T4, T5>? other)
+        public bool Equals(U<T0, T1, T2, T3, T4, T5>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -279,13 +317,25 @@ namespace BeeSharp.Types
                 && this.ofT5.Equals(other.ofT5);
         }
 
-        public override bool Equals(object? other) => this.Equals(other as Union<T0, T1, T2, T3, T4, T5>);
+        public override string ToString() 
+        {
+            var value = this.ofT0.MapOrElse(x => x.ToString(),
+                () => this.ofT1.MapOrElse(x => x.ToString(), 
+                () => this.ofT2.MapOrElse(x => x.ToString(), 
+                () => this.ofT3.MapOrElse(x => x.ToString(), 
+                () => this.ofT4.MapOrElse(x => x.ToString(), 
+                    () => this.ofT5.Map(x => x.ToString()
+            )))))).Unwrap();
+            return $"U{{{value}}}";
+        }
+
+        public override bool Equals(object? other) => this.Equals(other as U<T0, T1, T2, T3, T4, T5>);
 
         public override int GetHashCode()
             => HashCode.Combine(this.ofT0, this.ofT1, this.ofT2, this.ofT3, this.ofT4, this.ofT5);
     }
 
-    public sealed class Union<T0, T1, T2, T3, T4, T5, T6> : IEquatable<Union<T0, T1, T2, T3, T4, T5, T6>>
+    public sealed class U<T0, T1, T2, T3, T4, T5, T6> : IEquatable<U<T0, T1, T2, T3, T4, T5, T6>>
     {
         private readonly Opt<T0> ofT0;
         private readonly Opt<T1> ofT1;
@@ -295,21 +345,21 @@ namespace BeeSharp.Types
         private readonly Opt<T5> ofT5;
         private readonly Opt<T6> ofT6;
 
-        public Union(T0 of) => this.ofT0 = Opt.Some(of);
-        public Union(T1 of) => this.ofT1 = Opt.Some(of);
-        public Union(T2 of) => this.ofT2 = Opt.Some(of);
-        public Union(T3 of) => this.ofT3 = Opt.Some(of);
-        public Union(T4 of) => this.ofT4 = Opt.Some(of);
-        public Union(T5 of) => this.ofT5 = Opt.Some(of);
-        public Union(T6 of) => this.ofT6 = Opt.Some(of);
+        public U(T0 of) => this.ofT0 = Opt.Some(of);
+        public U(T1 of) => this.ofT1 = Opt.Some(of);
+        public U(T2 of) => this.ofT2 = Opt.Some(of);
+        public U(T3 of) => this.ofT3 = Opt.Some(of);
+        public U(T4 of) => this.ofT4 = Opt.Some(of);
+        public U(T5 of) => this.ofT5 = Opt.Some(of);
+        public U(T6 of) => this.ofT6 = Opt.Some(of);
 
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6>(T0 of) => new Union<T0, T1, T2, T3, T4, T5, T6>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6>(T1 of) => new Union<T0, T1, T2, T3, T4, T5, T6>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6>(T2 of) => new Union<T0, T1, T2, T3, T4, T5, T6>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6>(T3 of) => new Union<T0, T1, T2, T3, T4, T5, T6>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6>(T4 of) => new Union<T0, T1, T2, T3, T4, T5, T6>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6>(T5 of) => new Union<T0, T1, T2, T3, T4, T5, T6>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6>(T6 of) => new Union<T0, T1, T2, T3, T4, T5, T6>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6>(T0 of) => new U<T0, T1, T2, T3, T4, T5, T6>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6>(T1 of) => new U<T0, T1, T2, T3, T4, T5, T6>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6>(T2 of) => new U<T0, T1, T2, T3, T4, T5, T6>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6>(T3 of) => new U<T0, T1, T2, T3, T4, T5, T6>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6>(T4 of) => new U<T0, T1, T2, T3, T4, T5, T6>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6>(T5 of) => new U<T0, T1, T2, T3, T4, T5, T6>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6>(T6 of) => new U<T0, T1, T2, T3, T4, T5, T6>(of);
 
         public T Map<T>(Func<T0, T> m0, Func<T1, T> m1, Func<T2, T> m2, Func<T3, T> m3, Func<T4, T> m4, Func<T5, T> m5, Func<T6, T> m6) =>
             this.ofT0.MapOrElse(m0,
@@ -342,7 +392,7 @@ namespace BeeSharp.Types
             throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
         }
 
-        public bool Equals(Union<T0, T1, T2, T3, T4, T5, T6>? other)
+        public bool Equals(U<T0, T1, T2, T3, T4, T5, T6>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -356,13 +406,26 @@ namespace BeeSharp.Types
                 && this.ofT6.Equals(other.ofT6);
         }
 
-        public override bool Equals(object? other) => this.Equals(other as Union<T0, T1, T2, T3, T4, T5, T6>);
+        public override string ToString() 
+        {
+            var value = this.ofT0.MapOrElse(x => x.ToString(),
+                () => this.ofT1.MapOrElse(x => x.ToString(), 
+                () => this.ofT2.MapOrElse(x => x.ToString(), 
+                () => this.ofT3.MapOrElse(x => x.ToString(), 
+                () => this.ofT4.MapOrElse(x => x.ToString(), 
+                () => this.ofT5.MapOrElse(x => x.ToString(), 
+                    () => this.ofT6.Map(x => x.ToString()
+            ))))))).Unwrap();
+            return $"U{{{value}}}";
+        }
+
+        public override bool Equals(object? other) => this.Equals(other as U<T0, T1, T2, T3, T4, T5, T6>);
 
         public override int GetHashCode()
             => HashCode.Combine(this.ofT0, this.ofT1, this.ofT2, this.ofT3, this.ofT4, this.ofT5, this.ofT6);
     }
 
-    public sealed class Union<T0, T1, T2, T3, T4, T5, T6, T7> : IEquatable<Union<T0, T1, T2, T3, T4, T5, T6, T7>>
+    public sealed class U<T0, T1, T2, T3, T4, T5, T6, T7> : IEquatable<U<T0, T1, T2, T3, T4, T5, T6, T7>>
     {
         private readonly Opt<T0> ofT0;
         private readonly Opt<T1> ofT1;
@@ -373,23 +436,23 @@ namespace BeeSharp.Types
         private readonly Opt<T6> ofT6;
         private readonly Opt<T7> ofT7;
 
-        public Union(T0 of) => this.ofT0 = Opt.Some(of);
-        public Union(T1 of) => this.ofT1 = Opt.Some(of);
-        public Union(T2 of) => this.ofT2 = Opt.Some(of);
-        public Union(T3 of) => this.ofT3 = Opt.Some(of);
-        public Union(T4 of) => this.ofT4 = Opt.Some(of);
-        public Union(T5 of) => this.ofT5 = Opt.Some(of);
-        public Union(T6 of) => this.ofT6 = Opt.Some(of);
-        public Union(T7 of) => this.ofT7 = Opt.Some(of);
+        public U(T0 of) => this.ofT0 = Opt.Some(of);
+        public U(T1 of) => this.ofT1 = Opt.Some(of);
+        public U(T2 of) => this.ofT2 = Opt.Some(of);
+        public U(T3 of) => this.ofT3 = Opt.Some(of);
+        public U(T4 of) => this.ofT4 = Opt.Some(of);
+        public U(T5 of) => this.ofT5 = Opt.Some(of);
+        public U(T6 of) => this.ofT6 = Opt.Some(of);
+        public U(T7 of) => this.ofT7 = Opt.Some(of);
 
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T0 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T1 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T2 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T3 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T4 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T5 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T6 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
-        public static implicit operator Union<T0, T1, T2, T3, T4, T5, T6, T7>(T7 of) => new Union<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T0 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T1 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T2 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T3 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T4 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T5 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T6 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
+        public static implicit operator U<T0, T1, T2, T3, T4, T5, T6, T7>(T7 of) => new U<T0, T1, T2, T3, T4, T5, T6, T7>(of);
 
         public T Map<T>(Func<T0, T> m0, Func<T1, T> m1, Func<T2, T> m2, Func<T3, T> m3, Func<T4, T> m4, Func<T5, T> m5, Func<T6, T> m6, Func<T7, T> m7) =>
             this.ofT0.MapOrElse(m0,
@@ -425,7 +488,7 @@ namespace BeeSharp.Types
             throw new InvalidOperationException($"Type '{typeof(T)}' is not valid.");
         }
 
-        public bool Equals(Union<T0, T1, T2, T3, T4, T5, T6, T7>? other)
+        public bool Equals(U<T0, T1, T2, T3, T4, T5, T6, T7>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -440,13 +503,29 @@ namespace BeeSharp.Types
                 && this.ofT7.Equals(other.ofT7);
         }
 
-        public override bool Equals(object? other) => this.Equals(other as Union<T0, T1, T2, T3, T4, T5, T6, T7>);
+        public override string ToString() 
+        {
+            var value = this.ofT0.MapOrElse(x => x.ToString(),
+                () => this.ofT1.MapOrElse(x => x.ToString(), 
+                () => this.ofT2.MapOrElse(x => x.ToString(), 
+                () => this.ofT3.MapOrElse(x => x.ToString(), 
+                () => this.ofT4.MapOrElse(x => x.ToString(), 
+                () => this.ofT5.MapOrElse(x => x.ToString(), 
+                () => this.ofT6.MapOrElse(x => x.ToString(), 
+                    () => this.ofT7.Map(x => x.ToString()
+            )))))))).Unwrap();
+            return $"U{{{value}}}";
+        }
+
+        public override bool Equals(object? other) => this.Equals(other as U<T0, T1, T2, T3, T4, T5, T6, T7>);
 
         public override int GetHashCode()
             => HashCode.Combine(this.ofT0, this.ofT1, this.ofT2, this.ofT3, this.ofT4, this.ofT5, this.ofT6, this.ofT7);
     }
 
 }
+
+
 
 
 

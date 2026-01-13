@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+
 using BeeSharp.Utils;
 
 namespace BeeSharp.Types
@@ -25,7 +26,7 @@ namespace BeeSharp.Types
         [AllowNull]
         private readonly T some;
 
-        public Opt([AllowNull]T value)
+        public Opt([AllowNull] T value)
             : this(value, value != null)
         {
         }
@@ -95,6 +96,10 @@ namespace BeeSharp.Types
             ? Opt.Some(map(this.some))
             : Opt<TNew>.None;
 
+        public Opt<TNew> MapOrElse<TNew>(Func<T, TNew> map, Func<Opt<TNew>> orElse) => this.IsSome
+            ? Opt.Some(map(this.some))
+            : orElse();
+
         public U MapOr<U>(Func<T, U> map, U def) => this.IsSome
             ? map(this.some)
             : def;
@@ -156,7 +161,7 @@ namespace BeeSharp.Types
                 _ => Opt<T>.None,
             };
         }
-        private Opt([AllowNull]T value, bool hasValue)
+        private Opt([AllowNull] T value, bool hasValue)
         {
             this.some = value;
             this.IsSome = hasValue;

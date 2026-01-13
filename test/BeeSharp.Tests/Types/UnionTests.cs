@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+
 using BeeSharp.Types;
+
 using FluentAssertions;
+
 using Xunit;
 
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -11,7 +14,7 @@ namespace BeeSharp.Tests.Types
 {
     internal class Person
     {
-        public Union<Unborn, Living, Dead> state = new Unborn();
+        public U<Unborn, Living, Dead> state = new Unborn();
 
         public struct Unborn
         {
@@ -119,8 +122,8 @@ namespace BeeSharp.Tests.Types
             se.IsSet.Should().BeTrue();
         }
 
-        public static TheoryData<Union<int, double, string>, Union<int, double, string>, bool> EqualsTestData { get; } =
-            new TheoryData<Union<int, double, string>, Union<int, double, string>, bool>()
+        public static TheoryData<U<int, double, string>, U<int, double, string>, bool> EqualsTestData { get; } =
+            new TheoryData<U<int, double, string>, U<int, double, string>, bool>()
             {
                 { CreateInt(), null, false },
                 { CreateInt(), CreateInt(2), false },
@@ -131,7 +134,7 @@ namespace BeeSharp.Tests.Types
 
         [Theory]
         [MemberData(nameof(EqualsTestData))]
-        public void Eqals_ReturnsCorrectResult(Union<int, double, string> x, Union<int, double, string> y, bool expected)
+        public void Eqals_ReturnsCorrectResult(U<int, double, string> x, U<int, double, string> y, bool expected)
         {
             // Act
             bool er = x.Equals(y);
@@ -142,7 +145,7 @@ namespace BeeSharp.Tests.Types
 
         [Theory]
         [MemberData(nameof(EqualsTestData))]
-        public void EqalsObj_ReturnsCorrectResult(Union<int, double, string> x, object y, bool expected)
+        public void EqalsObj_ReturnsCorrectResult(U<int, double, string> x, object y, bool expected)
         {
             // Act
             bool er = x.Equals(y);
@@ -151,13 +154,23 @@ namespace BeeSharp.Tests.Types
             er.Should().Be(expected);
         }
 
-        private static string Map(Union<int, double, string> u)
+
+        [Fact]
+        public void Foo()
+        {
+            var x = new U<int, string>("hello");
+
+            var s = x.ToString();
+        }
+
+
+        private static string Map(U<int, double, string> u)
             => u.Map(
                    i => i.ToString("Mapped int: 0", CultureInfo.InvariantCulture),
                    d => d.ToString("Mapped double: 0.0", CultureInfo.InvariantCulture),
                    s => $"Mapped string: {s}");
 
-        private static void Do(Union<int, double, string> u, out ManualResetEventSlim ie, out ManualResetEventSlim de, out ManualResetEventSlim se)
+        private static void Do(U<int, double, string> u, out ManualResetEventSlim ie, out ManualResetEventSlim de, out ManualResetEventSlim se)
         {
             var iel = new ManualResetEventSlim();
             var del = new ManualResetEventSlim();
@@ -174,13 +187,13 @@ namespace BeeSharp.Tests.Types
         }
 
 
-        private static Union<int, double, string> CreateInt(int i = IDef)
-            => new Union<int, double, string>(i);
+        private static U<int, double, string> CreateInt(int i = IDef)
+            => new U<int, double, string>(i);
 
-        private static Union<int, double, string> CreateDouble(double d = DDef)
-            => new Union<int, double, string>(d);
+        private static U<int, double, string> CreateDouble(double d = DDef)
+            => new U<int, double, string>(d);
 
-        private static Union<int, double, string> CreateString(string s = SDef)
-            => new Union<int, double, string>(s);
+        private static U<int, double, string> CreateString(string s = SDef)
+            => new U<int, double, string>(s);
     }
 }

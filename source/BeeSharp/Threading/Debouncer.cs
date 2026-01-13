@@ -14,24 +14,29 @@ namespace BeeSharp.Threading
     /// I only care that it was raised at all and execute some expensive logic once if so. But I
     /// don't care much (besides performance) if the logic runs twice.
     /// </remarks>
-    public sealed class Aggregator
+    public sealed class Debouncer
     {
         private readonly TimeSpan aggregateInterval;
+        private CancellationTokenSource cancel = new();
 
-        private CancellationTokenSource cancel = new CancellationTokenSource();
-
-        public Aggregator(TimeSpan aggregateInterval)
+        public Debouncer(TimeSpan aggregateInterval)
         {
             this.aggregateInterval = aggregateInterval;
         }
 
-        public void Aggregate(Action toRun)
+        public void Debounce(Action toRun)
         {
             this.cancel.Cancel();
             this.cancel = new CancellationTokenSource();
 
-            Task.Delay(this.aggregateInterval, cancel.Token)
-                .ContinueWith(_ => toRun(), TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Delay(aggregateInterval, cancel.Token)
+                .ContinueWith(t =>
+                {
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        toRun();
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

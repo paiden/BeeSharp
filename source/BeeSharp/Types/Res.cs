@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+
 using BeeSharp.Utils;
 
 namespace BeeSharp.Types
@@ -83,6 +84,19 @@ namespace BeeSharp.Types
             ? op(this.err)
             : new Res<T>(this.res.Unwrap());
 
+        public Res<T> Or(Action<Error> errorAction)
+        {
+            if (this.res)
+            {
+                return this;
+            }
+            else
+            {
+                errorAction(this.err!);
+                return this.err!;
+            }
+        }
+
         public Res<T> OrWrapError(Error newError) => this.err != null
             ? Res<T>.Err(newError.Wrap(this.err))
             : this;
@@ -99,10 +113,18 @@ namespace BeeSharp.Types
             ? op(this.res.Unwrap())
             : orElse(this.err!);
 
+        public Res<TNew> MapOr<TNew>(Func<T, TNew> op, Func<Error, TNew> orElse) => this.res
+            ? new(op(this.res.Unwrap()))
+            : new(orElse(this.err!));
+
+        public Res<TNew> MapOr<TNew>(Func<T, TNew> op, Func<Error, Error> orElse) => this.res
+            ? new(op(this.res.Unwrap()))
+            : new(orElse(this.err!));
+
         public T Unwrap() => this.res
             ? this.res.Unwrap()
             : throw new InvalidOperationException($"Cannot unwrap result on 'Error' with value '{this.err}'");
-        
+
         public T UnwrapOr(T or) => this.res
             ? this.res.Unwrap()
             : or;

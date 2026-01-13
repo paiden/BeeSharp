@@ -23,7 +23,7 @@ namespace BeeSharp.Types
 void GenerateOptOfClass(int numTypeArgs)
 {
 #>
-    public sealed class Union<#=TypeArgs(numTypeArgs)#> : IEquatable<Union<#=TypeArgs(numTypeArgs)#>>
+    public sealed class U<#=TypeArgs(numTypeArgs)#> : IEquatable<U<#=TypeArgs(numTypeArgs)#>>
     {
 <#Generate(numTypeArgs, Field);#>
 
@@ -39,7 +39,9 @@ void GenerateOptOfClass(int numTypeArgs)
 
 <#Equals(numTypeArgs);#>
 
-        public override bool Equals(object? other) => this.Equals(other as Union<#=TypeArgs(numTypeArgs)#>);
+<#ToString(numTypeArgs);#>
+
+        public override bool Equals(object? other) => this.Equals(other as U<#=TypeArgs(numTypeArgs)#>);
 
 <#GetHashCode(numTypeArgs);#>
     }
@@ -52,7 +54,7 @@ void GenerateOptOfClass(int numTypeArgs)
 void Constructor(int numTypeArgs, int cur)
 {
 #>
-        public Union(T<#=cur#> of) => this.ofT<#=cur#> = Opt.Some(of);
+        public U(T<#=cur#> of) => this.ofT<#=cur#> = Opt.Some(of);
 <#
 }
 #>
@@ -61,7 +63,7 @@ void Constructor(int numTypeArgs, int cur)
 void ImplicitOperator(int numTypeArgs, int cur)
 {
 #>
-        public static implicit operator Union<#=TypeArgs(numTypeArgs)#>(T<#=cur#> of) => new Union<#=TypeArgs(numTypeArgs)#>(of);
+        public static implicit operator U<#=TypeArgs(numTypeArgs)#>(T<#=cur#> of) => new U<#=TypeArgs(numTypeArgs)#>(of);
 <#
 }
 #>
@@ -141,7 +143,7 @@ void Equals(int numTypeArgs)
 {
     int nmo = numTypeArgs - 1;
 #>
-        public bool Equals(Union<#=TypeArgs(numTypeArgs)#>? other)
+        public bool Equals(U<#=TypeArgs(numTypeArgs)#>? other)
         {
             if(ReferenceEquals(other, null)) { return false; }
             if(ReferenceEquals(this, other)) { return true; }
@@ -170,7 +172,32 @@ void GetHashCode(int numTypeArgs)
             => HashCode.Combine(<#=FieldArgList(numTypeArgs)#>);
 <#
 }
+
 #>
+
+<#
+void ToString(int numTypeArgs) 
+{
+#>
+        public override string ToString() 
+        {
+            var value = this.<#=FieldName(0)#>.MapOrElse(x => x.ToString(),
+<#
+            for (int i = 1; i < numTypeArgs - 1; i++) 
+            {
+#>
+                () => this.<#=FieldName(i)#>.MapOrElse(x => x.ToString(), 
+<#
+            }
+#>
+                    () => this.<#=FieldName(numTypeArgs-1)#>.Map(x => x.ToString()
+            <#=Repeat(")", numTypeArgs)#>.Unwrap();
+            return $"U{{{value}}}";
+        }
+<#
+}
+#>
+
 
 <#+
 
