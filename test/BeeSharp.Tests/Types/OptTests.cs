@@ -10,7 +10,7 @@ namespace BeeSharp.Tests.Types
         private const int DefSome = 1;
         private const int OpValue = DefSome + 1;
 
-        private static readonly Error DefErr = Error.Unspecified("e");
+        private static readonly Err DefErr = Err.Unspecified("e");
 
         [Fact]
         public void And_GivenSomeOpt_ShouldReturnAnd()
@@ -426,58 +426,6 @@ namespace BeeSharp.Tests.Types
         }
 
         [Fact]
-        public void OkOr_GivenSome_ShouldReturnOkSome()
-        {
-            // Arrange
-            var o = Some();
-
-            // Act
-            var r = o.OkOr(DefErr);
-
-            // Assert
-            r.Should().Be(Res.Ok(DefSome));
-        }
-
-        [Fact]
-        public void OkOr_GivenNone_ShouldReturnErr()
-        {
-            // Arrange
-            var o = None();
-
-            // Act
-            var r = o.OkOr(DefErr);
-
-            // Assert
-            r.Should().Be(Res<int>.Err(DefErr));
-        }
-
-        [Fact]
-        public void OkOrElse_GivenSome_ShouldReturnOkSome()
-        {
-            // Arrange
-            var o = Some();
-
-            // Act
-            var r = o.OkOrElse(() => DefErr);
-
-            // Assert
-            r.Should().Be(Res.Ok(DefSome));
-        }
-
-        [Fact]
-        public void OkOrElse_GivenNone_ShouldReturnErr()
-        {
-            // Arrange
-            var o = None();
-
-            // Act
-            var r = o.OkOrElse(() => DefErr);
-
-            // Assert
-            r.Should().Be(Res<int>.Err(DefErr));
-        }
-
-        [Fact]
         public void OrElseOpt_GivenSome_ShouldReturnSome()
         {
             // Arrange
@@ -626,28 +574,6 @@ namespace BeeSharp.Tests.Types
 
             // Assert
             r.Should().Be(DefSome);
-        }
-
-
-        public static TheoryData<Opt<Res<int>>, Res<Opt<int>>> TransposeData { get; } =
-            new TheoryData<Opt<Res<int>>, Res<Opt<int>>>()
-            {
-                { Opt<Res<int>>.None, Res<Opt<int>>.Ok(None()) },
-                { Opt.Some(Res.Ok(1)), Res.Ok(Opt.Some(1)) },
-                { Opt.Some(Res<int>.Err(DefErr)), Res<Opt<int>>.Err(DefErr) }
-            };
-
-        [Theory]
-        [MemberData(nameof(TransposeData))]
-        public void Transpose_ShouldReturnCorrectResults(Opt<Res<int>> x, Res<Opt<int>> expected)
-        {
-            // Arrange
-
-            // Act
-            var r = x.Transpose();
-
-            // Assert
-            r.Should().Be(expected);
         }
 
         private static Opt<int> None()

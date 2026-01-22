@@ -48,7 +48,7 @@ namespace BeeSharp.Tests.Types
         public void GivenPathWithUserInputErrors_OfCreatesCorrectedResult(string input, string expected)
         {
             // Act
-            var p = AbsDirPath.Of(input).Unwrap();
+            var p = AbsDirPath.Of(input).UnwrapOrThrow();
 
             // Assert
             p.Should().Be(AbsDirPath.New(expected));
@@ -59,7 +59,7 @@ namespace BeeSharp.Tests.Types
         public void GivenPathWithUncorrectableUserInputErrors_ReturnsErrorRes(string input)
         {
             // Act
-            var e = AbsDirPath.Of(input).UnwrapErr();
+            var e = AbsDirPath.Of(input).UnwrapErrOrThrow();
 
             // Assert
             e.Should().NotBeNull();
@@ -69,7 +69,7 @@ namespace BeeSharp.Tests.Types
         public void GivenDirPath_WhenCombinedWithFilename_IsAAbsFilePath()
         {
             // Arrange
-            var d = AbsDirPath.Of(@"C:\test").Unwrap();
+            var d = AbsDirPath.Of(@"C:\test").UnwrapOrThrow();
             var f = FileName.New("test.txt");
 
             // Act

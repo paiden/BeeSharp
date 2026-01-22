@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,6 +49,7 @@ using static BeeSharp.Internal.PathStringUtils;
 
         static void Main(string[] args)
         {
+            Debugger.Launch();
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(o =>
                 {
@@ -135,6 +138,7 @@ using static BeeSharp.Internal.PathStringUtils;
         {
             "AnalyzerMarkers.cs",
             "AssemblyInfo.cs",
+            "AssemblyAttributes.cs",
             "BeeSharpConstants.cs",
             "Error.cs",
         };

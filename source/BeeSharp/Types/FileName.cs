@@ -13,7 +13,7 @@ namespace BeeSharp.Types
 
         public static FileName New(string s) => new FileName(Check(s));
 
-        public static Res<FileName> Of(string s) => Res.Try(() => new FileName(Check(Fixup(s))));
+        public static R<FileName> Of(string s) => R<FileName>.Try(() => new FileName(Check(Fixup(s))));
 
         public static FileName UncheckedNew(string s) => new FileName(s);
 

@@ -2,7 +2,7 @@
   "profiles": {
     "CodeMangler": {
       "commandName": "Project",
-      "commandLineArgs": "-i \"C:\\Dev\\BeeSharp\\source\\BeeSharp\" -o \"C:\\Dev\\BeeSharp\\artifacts\\BeeSharp.g.cs\""
+      "commandLineArgs": "-i /home/phiasko/dev/repos/BeeSharp/source/BeeSharp/ -o /home/phiasko/dev/repos/BeeSharp/artifacts/test.g.cs"
     }
   }
 }

@@ -25,15 +25,15 @@
 
         public static bool operator !=(DirPath x, DirPath y) => !x.Equals(y);
 
-        public static Res<DirPath> Of(string p)
+        public static R<DirPath> Of(string p)
         {
             var rp = RelDirPath.Of(p);
-            if (rp.IsOk) { return Res.Ok(new DirPath(rp.Unwrap())); }
+            if (rp.IsOk) { return R<DirPath>.Ok(new DirPath(rp.UnwrapOrThrow())); }
 
             var ap = AbsDirPath.Of(p);
-            if (ap.IsOk) { return Res.Ok(new DirPath(ap.Unwrap())); }
+            if (ap.IsOk) { return R<DirPath>.Ok(new DirPath(ap.UnwrapOrThrow())); }
 
-            return Res<DirPath>.Err(Error.InvalidOp($"'{p}' is not a valid absolute or relative directory path."));
+            return R<DirPath>.Err(Err.InvalidOp($"'{p}' is not a valid absolute or relative directory path."));
         }
 
         public int CompareTo(DirPath other) => this.StringRep.CompareTo(other.StringRep);

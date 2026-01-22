@@ -163,7 +163,6 @@ namespace BeeSharp.Tests.Types
             var s = x.ToString();
         }
 
-
         private static string Map(U<int, double, string> u)
             => u.Map(
                    i => i.ToString("Mapped int: 0", CultureInfo.InvariantCulture),

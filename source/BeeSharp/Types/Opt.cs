@@ -108,14 +108,6 @@ namespace BeeSharp.Types
             ? map(this.some)
             : def();
 
-        public Res<T> OkOr(Error err) => this.IsSome
-            ? Res.Ok(this.some)
-            : Res<T>.Err(err);
-
-        public Res<T> OkOrElse(Func<Error> err) => this.IsSome
-            ? Res.Ok(this.some)
-            : Res<T>.Err(err());
-
         public Opt<T> Or(Opt<T> or) => this.IsNone
             ? or
             : this;
@@ -208,15 +200,6 @@ namespace BeeSharp.Types
         public static Opt<T> Flatten<T>(this Opt<Opt<T>> o) => o.IsNone
             ? Opt<T>.None
             : o.Unwrap();
-
-        public static Res<Opt<T>> Transpose<T>(this Opt<Res<T>> o)
-        {
-            if (o.IsNone) { return Res.Ok(Opt<T>.None); }
-
-            var res = o.Unwrap();
-            if (res.IsOk) { return Res.Ok(Opt.Some(res.Unwrap())); }
-            else { return Res<Opt<T>>.Err(res.UnwrapErr()); }
-        }
 
         public static Opt<T> ToOpt<T>(this T obj) => new Opt<T>(obj);
     }

@@ -12,13 +12,13 @@ namespace BeeSharp.Types
 
         private AbsDirPath(string p) => this.value = p;
 
-        public static readonly AbsDirPath Current = Of(Directory.GetCurrentDirectory()).Unwrap();
+        public static readonly AbsDirPath Current = Of(Directory.GetCurrentDirectory()).UnwrapOrThrow();
 
         public static AbsDirPath New(string s) => new AbsDirPath(Check(s));
 
         public static AbsDirPath UncheckedNew(string s) => new AbsDirPath(s);
 
-        public static Res<AbsDirPath> Of(string s) => Res.Try(() => new AbsDirPath(Check(Fixup(s))));
+        public static R<AbsDirPath> Of(string s) => R<AbsDirPath>.Try(() => new AbsDirPath(Check(Fixup(s))));
 
         public int CompareTo(AbsDirPath other) => this.value.CompareTo(other.value);
 

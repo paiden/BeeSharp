@@ -15,7 +15,7 @@ namespace BeeSharp.Types
 
         public static AbsFilePath UncheckedNew(string p) => new AbsFilePath(p);
 
-        public static Res<AbsFilePath> Of(string p) => Res.Try(() => new AbsFilePath(Check(Fixup(p))));
+        public static R<AbsFilePath> Of(string p) => R<AbsFilePath>.Try(() => new AbsFilePath(Check(Fixup(p))));
 
         public static bool operator ==(AbsFilePath x, AbsFilePath y) => x.Equals(y);
 

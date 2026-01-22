@@ -2,3 +2,8 @@
 
 # IDE0003: Remove qualification
 dotnet_style_qualification_for_field = true
+
+[*.{csproj, xml}]
+indent_style = space
+indent_size = 2
+tab_width = 2

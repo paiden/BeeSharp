@@ -31,7 +31,7 @@ namespace BeeSharp.Tests.Types
         public void ToAbsPath_UsesBasePathWhenIputIsRelativePathOtherwiseReturnsInputItself(string input, string basePath, string expected)
         {
             // Arrange
-            var p = DirPath.Of(input).Unwrap();
+            var p = DirPath.Of(input).UnwrapOrThrow();
 
             // Act
             var ap = p.ToAbsDirPath(AbsDirPath.New(basePath));
@@ -49,7 +49,7 @@ namespace BeeSharp.Tests.Types
             // Arrange
             string expected = Path.Combine(CurDir, input.Replace(@".\", string.Empty))
                 .EnsureEndsWith('\\');
-            var p = DirPath.Of(input).Unwrap();
+            var p = DirPath.Of(input).UnwrapOrThrow();
 
             // Act
             var r = p.ToAbsDirPath();

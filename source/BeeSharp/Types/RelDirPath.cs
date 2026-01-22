@@ -14,7 +14,7 @@ namespace BeeSharp.Types
 
         public static RelDirPath New(string p) => new RelDirPath(Check(p));
 
-        public static Res<RelDirPath> Of(string p) => Res.Try(() => new RelDirPath(Check(Fixup(p))));
+        public static R<RelDirPath> Of(string p) => R<RelDirPath>.Try(() => new RelDirPath(Check(Fixup(p))));
 
         public static RelDirPath UncheckedNew(string p) => new RelDirPath(p);
 

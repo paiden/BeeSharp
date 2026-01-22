@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <Import Project="../../shared.targets" />
-
+    
   <PropertyGroup>
-    <TargetFrameworks>net10.0</TargetFrameworks>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>0.1.19</Version>
-
+    <Version>0.1.37</Version>
+    <Ext Condition="'$(OS)'=='Windows_NT'">.exe</Ext>
   </PropertyGroup>
 
   <!-- Packaging options -->
@@ -16,7 +14,7 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
     <PackageOutputPath>$(ProjectDir)..\..\artifacts</PackageOutputPath>
-    <AssemblyVersion>0.1.12.0</AssemblyVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,10 +40,15 @@
       <DependentUpon>Union.tt</DependentUpon>
     </Compile>
   </ItemGroup>
+    
+  <ItemGroup>
+        
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
     <None Include="..\BeeSharp.Analyzer\bin\$(Configuration)\netstandard2.0\BeeSharp.Analyzer.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\BeeSharp.SourceGenerators\bin\$(Configuration)\netstandard2.0\BeeSharp.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="..\..\artifacts\BeeSharp.g.cs.pp" Pack="true" Visible="false" BuildAction="Compile" />
   </ItemGroup>
 
@@ -54,7 +57,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="&quot;$(ProjectDir)..\CodeMangler\bin\$(Configuration)\net8.0\CodeMangler.exe&quot; -i &quot;$(ProjectDir) &quot; -o &quot;$(ProjectDir)\..\..\artifacts\BeeSharp.g.cs&quot;" />
+    <Exec Command="&quot;$(ProjectDir)..\CodeMangler\bin\$(Configuration)\net10.0\CodeMangler$(Ext)&quot; -i &quot;$(ProjectDir) &quot; -o &quot;$(ProjectDir)\..\..\artifacts\BeeSharp.g.cs&quot;" />
   </Target>
-
+  
 </Project>
