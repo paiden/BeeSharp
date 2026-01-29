@@ -7,6 +7,23 @@ namespace BeeSharp.Tests.Generators;
 
 public class DiscriminatedUnionGeneratorTests
 {
+    private const string TypeAttributeSource = """
+                                               namespace TestProj
+                                               {
+                                                   public sealed class BeeSharpTypeAttribute : System.Attribute
+                                                   {
+                                                   }
+                                               }
+                                               """;
+
+    private const string ResSource = """
+                                     namespace TestProj 
+                                     {
+                                         [BeeSharpType]
+                                         public sealed struct R<T> { }
+                                     }
+                                     """;
+    
     private const string MarkerSource = """
                                         namespace System
                                         {
@@ -18,14 +35,14 @@ public class DiscriminatedUnionGeneratorTests
                                         """;
     
     private const string TypesSource = """
-                                       namespace MyTypes { class MyClass {} struct MyStruct {} }
+                                       namespace TestProj.SomeTypes { class MyClass {} struct MyStruct {} }
                                        """;
     
     private const string Source = """
                                   using System;
-                                  using MyTypes;
+                                  using TestProj.SomeTypes;
 
-                                  namespace Test.TestNs.Ns 
+                                  namespace TestProj 
                                   {
                                   [DiscriminatedUnion]
                                   internal partial class Union 
@@ -44,6 +61,8 @@ public class DiscriminatedUnionGeneratorTests
             .AddSyntaxTrees(CSharpSyntaxTree.ParseText(MarkerSource))
             .AddSyntaxTrees(CSharpSyntaxTree.ParseText(TypesSource))
             .AddSyntaxTrees(CSharpSyntaxTree.ParseText(Source))
+            .AddSyntaxTrees(CSharpSyntaxTree.ParseText(TypeAttributeSource))
+            .AddSyntaxTrees(CSharpSyntaxTree.ParseText(ResSource))
             .AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
             .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 

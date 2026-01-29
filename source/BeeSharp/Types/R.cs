@@ -10,6 +10,8 @@ namespace BeeSharp.Types
         public static R<T> Ok<T>(T res) => R<T>.Ok(res);
     }
     
+    // If type name is changed, source generator constant name must be changed also!
+    [BeeSharpType]
     public readonly struct R<T> : IEquatable<R<T>>
     {
         private static readonly IEqualityComparer<T> ResEqComparer = EqualityComparer<T>.Default;

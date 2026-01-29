@@ -35,7 +35,6 @@ namespace BeeSharp.Analyzer
             context.RegisterSyntaxNodeAction(AnalyzeConstructionExpression, SyntaxKind.ObjectCreationExpression);
             context.RegisterSyntaxNodeAction(AnalyzeDefaultExpression, SyntaxKind.DefaultExpression);
             context.RegisterSyntaxNodeAction(AnalyzeDefaultLiteralExpression, SyntaxKind.DefaultLiteralExpression);
-            context.RegisterSyntaxNodeAction(AnalyzeInvocationExpression, SyntaxKind.InvocationExpression);
         }
 
         private static void AnalyzeConstructionExpression(SyntaxNodeAnalysisContext context)
@@ -77,17 +76,6 @@ namespace BeeSharp.Analyzer
             if (IsPreventDefaultConstructionType(ti))
             {
                 ReportBS3003(context, expr, ti);
-                return;
-            }
-        }
-
-        private static void AnalyzeInvocationExpression(SyntaxNodeAnalysisContext context)
-        {
-            var expr = (InvocationExpressionSyntax)context.Node;
-            var ti = context.SemanticModel.GetTypeInfo(expr);
-            if (IsPreventDefaultConstructionType(ti))
-            {
-                ReportBS3004(context, expr, ti);
                 return;
             }
         }

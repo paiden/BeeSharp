@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>0.1.37</Version>
+    <Version>0.1.39</Version>
     <Ext Condition="'$(OS)'=='Windows_NT'">.exe</Ext>
   </PropertyGroup>
 

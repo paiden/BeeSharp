@@ -1,5 +1,6 @@
 using System;
 using BeeSharp.Tests.Unions.Types;
+using BeeSharp.Types;
 
 namespace BeeSharp.Compile.Test.Union;
 

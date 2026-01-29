@@ -27,6 +27,10 @@ partial class SimpleUnion
     }
     
     
+    public static implicit operator SimpleUnion(BeeSharp.Tests.Unions.Types.UnionClassType value) => new(value);
+    public static implicit operator SimpleUnion(BeeSharp.Tests.Unions.Types.UnionStructType value) => new(value);
+    public static implicit operator SimpleUnion(int value) => new(value);
+    
     public T Map<T>(
         Func<BeeSharp.Tests.Unions.Types.UnionClassType, T> mapA,
         Func<BeeSharp.Tests.Unions.Types.UnionStructType, T> mapB,
@@ -54,6 +58,29 @@ partial class SimpleUnion
     {
         if (this.C is null) { throw new InvalidOperationException(); }
         return this.C.Value;
+    }
+    
+    
+    
+    public BeeSharp.Types.R<BeeSharp.Tests.Unions.Types.UnionClassType> UnwrapA()
+    {
+        return this.A is null
+            ? BeeSharp.Types.Err.InvalidOp("Boom")
+            : this.A;
+    }
+    
+    public BeeSharp.Types.R<BeeSharp.Tests.Unions.Types.UnionStructType> UnwrapB()
+    {
+        return this.B is null
+            ? BeeSharp.Types.Err.InvalidOp("Boom")
+            : this.B.Value;
+    }
+    
+    public BeeSharp.Types.R<int> UnwrapC()
+    {
+        return this.C is null
+            ? BeeSharp.Types.Err.InvalidOp("Boom")
+            : this.C.Value;
     }
     
     
