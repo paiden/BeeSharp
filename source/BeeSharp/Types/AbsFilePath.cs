@@ -39,6 +39,16 @@ namespace BeeSharp.Types
             return s;
         }
 
+        public R<RelFilePath> TrimBasePath(AbsDirPath basePath)
+        {
+            if (this.value.StartsWith(basePath))
+            {
+                return RelFilePath.Of(this.value[basePath.Length..]);
+            }
+
+            return Err.InvalidOp($"'{basePath}' is not a bas path of '{this.value}");
+        }
+        
         private static string Fixup(string s)
             => Path.GetFullPath(s.Trim()
                 .Replace(": ", ":") // Get rid of local disk relative paths

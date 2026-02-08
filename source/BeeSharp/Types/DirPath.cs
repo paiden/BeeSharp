@@ -28,10 +28,10 @@
         public static R<DirPath> Of(string p)
         {
             var rp = RelDirPath.Of(p);
-            if (rp.IsOk) { return R<DirPath>.Ok(new DirPath(rp.UnwrapOrThrow())); }
+            if (rp.IsOk) { return R<DirPath>.Ok(new DirPath(rp.ValueOrThrow())); }
 
             var ap = AbsDirPath.Of(p);
-            if (ap.IsOk) { return R<DirPath>.Ok(new DirPath(ap.UnwrapOrThrow())); }
+            if (ap.IsOk) { return R<DirPath>.Ok(new DirPath(ap.ValueOrThrow())); }
 
             return R<DirPath>.Err(Err.InvalidOp($"'{p}' is not a valid absolute or relative directory path."));
         }

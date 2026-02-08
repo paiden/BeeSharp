@@ -30,7 +30,7 @@ namespace BeeSharp.Tests.Types
             var p = RelDirPath.Of(input);
 
             // Assert
-            ((string)p.UnwrapOrThrow()).Should().Be(expected);
+            ((string)p.ValueOrThrow()).Should().Be(expected);
         }
     }
 }

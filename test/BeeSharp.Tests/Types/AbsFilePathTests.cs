@@ -65,7 +65,7 @@ namespace BeeSharp.Tests.Types
             // Arrange
 
             // Act
-            var p = AbsFilePath.Of(input).UnwrapOrThrow();
+            var p = AbsFilePath.Of(input).ValueOrThrow();
 
             // Assert
             ((string)p).Should().Be(expected);
@@ -78,7 +78,7 @@ namespace BeeSharp.Tests.Types
             // Arrange
 
             // Act
-            var e = AbsFilePath.Of(input).UnwrapErrOrThrow();
+            var e = AbsFilePath.Of(input).ErrOrThrow();
 
             // Assert
             e.Should().NotBeNull();

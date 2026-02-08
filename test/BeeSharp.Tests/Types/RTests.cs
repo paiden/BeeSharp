@@ -42,7 +42,7 @@ namespace BeeSharp.Tests.Types
             var r = Ok(Expected);
 
             // Act
-            var rv = r.UnwrapOrThrow();
+            var rv = r.ValueOrThrow();
 
             // Assert
             rv.Should().Be(Expected);
@@ -60,7 +60,7 @@ namespace BeeSharp.Tests.Types
             var r2 = r.Or(R<int>.Ok(OrVal));
 
             // Assert
-            r2.UnwrapOrThrow().Should().Be(Initial);
+            r2.ValueOrThrow().Should().Be(Initial);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace BeeSharp.Tests.Types
             var r2 = r.Or(R<int>.Ok(OrVal));
 
             // Assert
-            r2.UnwrapOrThrow().Should().Be(OrVal);
+            r2.ValueOrThrow().Should().Be(OrVal);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace BeeSharp.Tests.Types
             var mapped = r.Map(i => $"{i}{i}");
 
             // Assert
-            mapped.UnwrapOrThrow().Should().Be("22");
+            mapped.ValueOrThrow().Should().Be("22");
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace BeeSharp.Tests.Types
 
             // Assert
             w.IsErr.Should().BeTrue();
-            var e = w.UnwrapErrOrThrow();
+            var e = w.ErrOrThrow();
             e.Inner.Should().Be(DefErr);
             e.Message.Should().Be(OpErr.Message);
         }

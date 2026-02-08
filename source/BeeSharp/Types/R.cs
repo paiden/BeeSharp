@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using BeeSharp.Utils;
 
@@ -8,6 +9,9 @@ namespace BeeSharp.Types
     public static class R
     {
         public static R<T> Ok<T>(T res) => R<T>.Ok(res);
+
+        public static IEnumerable<T> FilterSuccess<T>(IEnumerable<R<T>> input)
+            => input.Where(i => i.IsOk).Select(i => i.ValueOrThrow());
     }
     
     // If type name is changed, source generator constant name must be changed also!
@@ -86,17 +90,22 @@ namespace BeeSharp.Types
                 ? op(this.res)
                 : defaultValue;
 
-        public T UnwrapOrThrow()
+        public TNew MapOr<TNew>(Func<T, TNew> mapOk, Func<Err, TNew> mapErr)
+            => this.IsOk
+                ? mapOk(this.res)
+                : mapErr(this.err!); 
+
+        public T ValueOrThrow()
             => this.IsOk
                 ? this.res
                 : throw new InvalidOperationException($"Cannot unwrap result on 'Error' with value '{this.err}'");
 
-        public T UnwrapOr(T or)
+        public T ValueOr(T or)
             => this.IsOk
                 ? this.res
                 : or;
 
-        public Err UnwrapErrOrThrow()
+        public Err ErrOrThrow()
             => this.err ??
                throw new InvalidOperationException($"Cannot unwrap error on 'Ok' with value '{this.res}'.");
 
@@ -148,6 +157,9 @@ namespace BeeSharp.Types
     public static class RExtensions
     {
         public static R<TNew> CastBase<TOld, TNew>(this R<TOld> r) where TOld : TNew
-            => r.IsOk ? R<TNew>.Ok(r.UnwrapOrThrow()) : R<TNew>.Err(r.UnwrapErrOrThrow());
+            => r.IsOk ? R<TNew>.Ok(r.ValueOrThrow()) : R<TNew>.Err(r.ErrOrThrow());
+
+        public static IEnumerable<T> FilterSuccess<T>(this IEnumerable<R<T>> input)
+            => input.Where(i => i.IsOk).Select(i => i.ValueOrThrow());
     }
 }

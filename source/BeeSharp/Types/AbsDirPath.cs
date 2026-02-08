@@ -10,9 +10,11 @@ namespace BeeSharp.Types
     {
         private readonly string value;
 
+        public int Length => this.value.Length;
+        
         private AbsDirPath(string p) => this.value = p;
 
-        public static readonly AbsDirPath Current = Of(Directory.GetCurrentDirectory()).UnwrapOrThrow();
+        public static readonly AbsDirPath Current = Of(Directory.GetCurrentDirectory()).ValueOrThrow();
 
         public static AbsDirPath New(string s) => new AbsDirPath(Check(s));
 
